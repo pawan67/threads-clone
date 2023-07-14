@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+
+    --primary: 24 9.8% 10%;
+    --primary-foreground: 60 9.1% 97.8%;
+
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+
+    --ring: 24 5.4% 63.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0, 0%, 4%;
+    --foreground: 0 0% 98%;
+
+    --muted: 0, 0%, 9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --popover: #080808a9;
+    --popover-foreground: 0 0% 98%;
+
+    --card: #0a0a0a;
+    --card-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: ;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+
+    --ring: 240 3.7% 15.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.gradient {
+  background: radial-gradient(
+      circle farthest-corner at 35% 90%,
+      #eba93b,
+      transparent 50%
+    ),
+    radial-gradient(circle farthest-corner at 0 140%, #eba93b, transparent 50%),
+    radial-gradient(ellipse farthest-corner at 0 -25%, #373ecc, transparent 50%),
+    radial-gradient(
+      ellipse farthest-corner at 20% -50%,
+      #373ecc,
+      transparent 50%
+    ),
+    radial-gradient(ellipse farthest-corner at 100% 0, #7c26bd, transparent 50%),
+    radial-gradient(
+      ellipse farthest-corner at 60% -20%,
+      #7c26bd,
+      transparent 50%
+    ),
+    radial-gradient(ellipse farthest-corner at 100% 100%, #de1d71, transparent),
+    linear-gradient(
+      #5244c7,
+      #c72893 30%,
+      #de2c4f 50%,
+      #f06826 70%,
+      #f2b657 100%
+    );
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
