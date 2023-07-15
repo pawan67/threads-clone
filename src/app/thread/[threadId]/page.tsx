@@ -1,6 +1,7 @@
 import Thread from "@/components/thread/Thread";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { User } from "@prisma/client";
 import React from "react";
 
 interface ThreadPageProps {
@@ -24,6 +25,10 @@ const ThreadPage = async ({ params }: ThreadPageProps) => {
       id: thread?.authorId,
     },
   });
+
+  if (!thread || !user) {
+    return <div>Thread not found</div>;
+  }
 
   return (
     <div>

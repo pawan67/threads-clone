@@ -2,7 +2,7 @@ import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { formatDistanceToNowStrict } from "date-fns";
 import locale from "date-fns/locale/en-US";
-
+import Filter from "bad-words";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -54,3 +54,13 @@ export function formatTimeToNow(date: Date): string {
     },
   });
 }
+
+export const cleanup = (text: string) => {
+  const filter = new Filter();
+
+  try {
+    return filter.clean(text);
+  } catch {
+    return text;
+  }
+};

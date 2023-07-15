@@ -13,18 +13,16 @@ const OnboardingPage = async ({}) => {
     },
   });
 
-  // if (getUser?.onboarded === true) {
-  //   redirect("/");
-  // }
+  if (!getUser) redirect("/");
 
   const userData = {
-    id: getUser?.id,
+    id: getUser.id,
     onboarded: true,
-    bio: getUser?.bio,
+    bio: getUser.bio,
     username: getUser?.username,
-    name: getUser?.name,
-    image: getUser?.image,
-    email: getUser?.email,
+    name: getUser.name,
+    image: getUser.image,
+    email: getUser.email,
   };
 
   const allUsernames = await db.user.findMany({

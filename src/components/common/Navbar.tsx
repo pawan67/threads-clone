@@ -9,9 +9,11 @@ import { buttonVariants } from "../ui/button";
 import { Separator } from "@/components/ui/separator";
 import Logo from "../logo/Logo";
 
-interface NavbarProps {}
+interface NavbarProps {
+  username?: any;
+}
 
-const Navbar: FC<NavbarProps> = ({}) => {
+const Navbar: FC<NavbarProps> = ({ username }) => {
   const pathname = usePathname();
   return (
     <>
@@ -28,6 +30,15 @@ const Navbar: FC<NavbarProps> = ({}) => {
                 )}
               </Link>
             ))}
+            {username && (
+              <Link href={`/${username}`}>
+                {`/${username}` === pathname ? (
+                  <User set="bold" size={25} />
+                ) : (
+                  <User primaryColor="gray" size={25} />
+                )}
+              </Link>
+            )}
           </div>
         </div>
       )}
@@ -57,6 +68,25 @@ const Navbar: FC<NavbarProps> = ({}) => {
               <span className="ml-2">{navItem.name}</span>
             </Link>
           ))}
+          {username && (
+            <Link
+              href={`/${username}`}
+              className={cn(
+                buttonVariants({ variant: "ghost", size: "lg" }),
+                pathname === `/${username}`
+                  ? "bg-muted  hover:bg-muted"
+                  : " hover:bg-muted",
+                "justify-start w-full   break-before-avoid whitespace-nowrap flex-shrink-0 flex items-center px-4  rounded-md  font-medium   transition-all"
+              )}
+            >
+              {`/${username}` === pathname ? (
+                <User set="bold" size={20} />
+              ) : (
+                <User primaryColor="gray" size={20} />
+              )}
+              <span className="ml-2">Profile</span>
+            </Link>
+          )}
         </div>
       </aside>
     </>

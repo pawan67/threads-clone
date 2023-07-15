@@ -20,13 +20,20 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getAuthSession();
+  const username = session?.user?.username;
+
+  
+
+  
   return (
     <html lang="en">
       <body className={cn(inter.className)}>
         <Providers>
-          <div className=" mx-auto max-w-4xl ">
-            <div className=" flex max-w-4xl justify-center ">
-              <Navbar />
+          <div className=" mx-auto max-w-3xl ">
+            <div className=" flex max-w-3xl justify-center ">
+
+              <Navbar username={username} />
               <main className="  container pt-5     relative  antialiased">
                 {children}
               </main>

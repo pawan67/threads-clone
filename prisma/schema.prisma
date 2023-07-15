@@ -38,44 +38,60 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
+  name          String
+  email         String    @unique
   emailVerified DateTime?
-  bio           String?
-  username      String?   @unique
+  bio           String    @default("")
+  username      String    @unique @default(cuid())
   isEdited      Boolean   @default(false)
   onboarded     Boolean   @default(false)
   isPrivate     Boolean   @default(false)
-  image         String?
+  image         String
   accounts      Account[]
   sessions      Session[]
   threads       Thread[]
-  Reply         Reply[]
-  role          Role      @default(USER)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now()) @updatedAt
+  
+  followedBy    User[]    @relation("UserFollows")
+  following     User[]    @relation("UserFollows")
+
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  likes     Likes[]
+  repost    Repost[]
 }
 
 model Thread {
   id        String   @id @default(cuid())
-  content   Json?
+  content   Json
   authorId  String
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+  parentId  String?
+  parent    Thread?  @relation("ParentChildren", fields: [parentId], references: [id])
 
-  replies   Reply[]
+  children  Thread[] @relation("ParentChildren")
   updatedAt DateTime @default(now()) @updatedAt
+  likes     Likes[]
+  repost    Repost?
 }
 
-model Reply {
-  id        String   @id @default(cuid())
-  content   Json?
-  authorId  String
-  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+model Likes {
+  thread    Thread   @relation(fields: [threadId], references: [id])
   threadId  String
-  thread    Thread   @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+  @@id([threadId, userId])
+}
+
+model Repost {
+  id         String @id @default(cuid())
+  threadId   String @unique
+  thread     Thread @relation(fields: [threadId], references: [id])
+  reposter   User   @relation(fields: [reposterId], references: [id])
+  reposterId String
 }
 
 enum Role {

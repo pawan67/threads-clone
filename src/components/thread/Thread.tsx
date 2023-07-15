@@ -8,21 +8,14 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { formatTimeToNow } from "@/lib/utils";
 import { Image } from "antd";
 
-interface contentJson {
-  text: string;
-  images: string[];
-}
 interface ThreadProps {
-  thread: Thread & { content: contentJson };
+  thread: Thread & { content: any };
   user: User;
 }
 
 const Thread: FC<ThreadProps> = ({ thread, user }) => {
-  console.log(thread);
-  console.log(user);
-
   return (
-    <div className=" mt-5">
+    <div>
       <div className=" flex items-center space-x-3">
         <Button variant="ghost" className="  rounded-full p-2 ">
           <ArrowLeft size={18} />

@@ -7,16 +7,16 @@ import OnboardingProfileUpdate from "./OnboardingProfileUpdate";
 
 interface ScreensProps {
   userData: {
-    id: string;
+    id: string ;
     onboarded: boolean;
     bio: string;
     username: string;
     name: string;
     image: string;
     email: string;
-  } | null;
+  };
   allUsernames: {
-    username: string | null;
+    username: string;
   }[];
 }
 

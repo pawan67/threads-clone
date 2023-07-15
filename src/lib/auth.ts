@@ -34,11 +34,9 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       const dbUser = await db.user.findFirst({
         where: {
-          email: token?.email,
+          email: token.email as string,
         },
       });
-
-      console.log(dbUser);
 
       if (!dbUser) {
         token.id = user!.id;
@@ -68,7 +66,7 @@ export const authOptions: NextAuthOptions = {
       };
     },
 
-    redirect() {
+    redirect({ url, baseUrl }) {
       if (!isOnboarded) {
         return "/onboarding";
       }
