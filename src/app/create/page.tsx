@@ -10,13 +10,8 @@ interface pageProps {}
 const page: FC<pageProps> = async ({}) => {
   const session = await getAuthSession();
   return (
-    <div className=" mt-5">
-      <div className=" flex items-center space-x-3">
-        <span className=" font-semibold">New Thread</span>
-      </div>
-      <Separator className=" my-3" />
+    <div>
       <ThreadCreate user={session?.user} />
-
       <SubmitThread />
     </div>
   );

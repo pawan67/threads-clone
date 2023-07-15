@@ -102,102 +102,116 @@ const ThreadCreate: FC<ThreadCreateProps> = ({ user, isReply }) => {
   };
 
   return (
-    <div className=" w-full ">
-      <div className=" flex space-x-3   w-full  ">
-        <div>
-          <Avatar>
-            <AvatarImage src={user.image} />
-          </Avatar>
-          <Separator className=" w-[2px] mx-auto my-2" orientation="vertical" />
-        </div>
-        <div className=" my-2    ">
-          <p className=" text-sm"> @{user.username}</p>
-
-          <div className=" my-1      ">
-            <TextareaAutosize
-              placeholder={
-                isReply ? "Reply to thread" : "Start a new thread..."
-              }
-              onChange={(e) => {
-                setContentJson({ ...contentJson, text: e.target.value });
-              }}
-              className=" my-4 text-lg   w-full resize-none appearance-none overflow-hidden bg-transparent   focus:outline-none"
+    <>
+      <div className=" flex items-center justify-between space-x-3">
+        <span className=" font-semibold">New Thread</span>
+        <Button onClick={() => router.back()} variant="outline">
+          <X className=" mr-2" size={16} /> Cancel
+        </Button>
+      </div>
+      <Separator className=" my-3" />
+      <div className=" w-full ">
+        <div className=" flex space-x-3   w-full  ">
+          <div>
+            <Avatar>
+              <AvatarImage src={user.image} />
+            </Avatar>
+            <Separator
+              className=" w-[2px] mx-auto my-2"
+              orientation="vertical"
             />
-            <div className="   ">
-              {contentJson.images.length > 0 && (
-                <Image.PreviewGroup>
-                  <div className="grid grid-cols-2 gap-3">
-                    {contentJson.images.map((image: string, index: string) => (
-                      <div className=" max-w-xl relative ">
-                        <Image
-                          key={index}
-                          className=" aspect-[4/3] object-cover rounded-md"
-                          src={image}
-                        />
-                        <Button
-                          onClick={() =>
-                            setContentJson({
-                              ...contentJson,
-                              images: contentJson.images.filter(
-                                (img: string) => img !== image
-                              ),
-                            })
-                          }
-                          variant="outline"
-                          className=" absolute top-3 right-3 p-2 rounded-full"
-                        >
-                          <X size={16} />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </Image.PreviewGroup>
-              )}
+          </div>
+          <div className=" my-2    ">
+            <p className=" text-sm"> @{user.username}</p>
+
+            <div className=" my-1      ">
+              <TextareaAutosize
+                placeholder={
+                  isReply ? "Reply to thread" : "Start a new thread..."
+                }
+                onChange={(e) => {
+                  setContentJson({ ...contentJson, text: e.target.value });
+                }}
+                className=" my-4 text-lg   w-full resize-none appearance-none overflow-hidden bg-transparent   focus:outline-none"
+              />
+              <div className="   ">
+                {contentJson.images.length > 0 && (
+                  <Image.PreviewGroup>
+                    <div className="grid grid-cols-2 gap-3">
+                      {contentJson.images.map(
+                        (image: string, index: string) => (
+                          <div className=" max-w-xl relative ">
+                            <Image
+                              key={index}
+                              className=" aspect-[4/3] object-cover rounded-md"
+                              src={image}
+                            />
+                            <Button
+                              onClick={() =>
+                                setContentJson({
+                                  ...contentJson,
+                                  images: contentJson.images.filter(
+                                    (img: string) => img !== image
+                                  ),
+                                })
+                              }
+                              variant="outline"
+                              className=" absolute top-3 right-3 p-2 rounded-full"
+                            >
+                              <X size={16} />
+                            </Button>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </Image.PreviewGroup>
+                )}
+              </div>
             </div>
-          </div>
 
-          {isImagesEmpty() && (
-            <Button className=" p-3" variant="outline">
-              <label htmlFor="imageUpload">
-                <input
-                  multiple
-                  id="imageUpload"
-                  // @ts-ignore
-                  onChange={(e) => imageUploader(e.target.files)}
-                  type="file"
-                  hidden
-                />
-                <ImAttachment size={16} />
-              </label>
+            {isImagesEmpty() && (
+              <Button className=" p-3" variant="outline">
+                <label htmlFor="imageUpload">
+                  <input
+                    multiple
+                    id="imageUpload"
+                    // @ts-ignore
+                    onChange={(e) => imageUploader(e.target.files)}
+                    type="file"
+                    hidden
+                  />
+                  <ImAttachment size={16} />
+                </label>
+              </Button>
+            )}
+          </div>
+        </div>
+
+        <div className=" mt-24    ">
+          <Separator className=" my-3" />
+          <div className=" flex justify-between">
+            <div
+              className={` ${
+                (isLoading || isContentEmpty()) && " text-secondary "
+              } `}
+            >
+              Anyone can reply
+            </div>
+
+            <Button
+              onClick={() => createThread()}
+              disabled={isContentEmpty() || isLoading}
+              type="submit"
+              form="thread-post-form"
+              className=" text-blue-400"
+              variant="secondary"
+            >
+              {isLoading ? "Posting..." : "Post"}
             </Button>
-          )}
-        </div>
-      </div>
-
-      <div className=" mt-24    ">
-        <Separator className=" my-3" />
-        <div className=" flex justify-between">
-          <div
-            className={` ${
-              (isLoading || isContentEmpty()) && " text-secondary "
-            } `}
-          >
-            Anyone can reply
           </div>
-
-          <Button
-            onClick={() => createThread()}
-            disabled={isContentEmpty() || isLoading}
-            type="submit"
-            form="thread-post-form"
-            className=" text-blue-400"
-            variant="secondary"
-          >
-            {isLoading ? "Posting..." : "Post"}
-          </Button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

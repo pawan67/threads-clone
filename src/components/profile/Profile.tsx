@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { useToast } from "@/lib/use-toast";
 import { usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import Image from "next/image";
 
 interface ProfileProps {
   user: User & {
@@ -33,16 +34,23 @@ const Profile: FC<ProfileProps> = ({
   return (
     <div>
       <div className=" flex flex-col   space-y-3">
-        <div className=" text-2xl font-semibold">{user.name}</div>
-        <div className="-mt-2 flex space-x-2 ">
-          <div className="  ">{user.username}</div>
+        <div className=" mt-3 flex justify-between items-center">
           <div>
-            <Badge
-              className=" text-muted-foreground rounded-full"
-              variant="secondary"
-            >
-              threads.net
-            </Badge>
+            <div className=" text-2xl font-semibold">{user.name}</div>
+            <div className=" flex space-x-2 ">
+              <div className="  ">{user.username}</div>
+              <div>
+                <Badge
+                  className=" text-muted-foreground rounded-full"
+                  variant="secondary"
+                >
+                  threads.net
+                </Badge>
+              </div>
+            </div>
+          </div>
+          <div className="w-14 h-14 rounded-full overflow-hidden bg-neutral-600">
+            <Image src={user.image} alt={user.name} height={56} width={56} />
           </div>
         </div>
         <div>

@@ -19,7 +19,7 @@ const Navbar: FC<NavbarProps> = ({ username }) => {
     <>
       {/* For mobile devices */}
       {pathname !== "/create" && (
-        <div className=" z-[1000] md:hidden fixed bottom-0 inset-x-0 p-7   ">
+        <div className=" z-[1000] md:hidden bg-background fixed bottom-0 inset-x-0 px-7 py-4   ">
           <div className=" flex space-x-3 justify-between">
             {navigationUrls.map((navItem, index) => (
               <Link href={navItem.url} key={index}>
