@@ -38,6 +38,8 @@ const layout: FC<layoutProps> = async ({ params, children }) => {
     },
   });
 
+  if (getSelf?.onboarded === false) return redirect("/onboarding");
+
   if (!user) {
     return (
       <div className=" flex flex-col space-y-3 items-center justify-center">

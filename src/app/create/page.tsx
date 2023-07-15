@@ -5,10 +5,20 @@ import { getAuthSession } from "@/lib/auth";
 import ThreadCreate from "@/components/ThreadCreate";
 import { Button } from "@/components/ui/button";
 import SubmitThread from "@/components/SubmitThread";
+import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
 interface pageProps {}
 
 const page: FC<pageProps> = async ({}) => {
+  
   const session = await getAuthSession();
+  const user = await db.user.findUnique({
+    where: {
+      id: session?.user?.id,
+    },
+  });
+
+  if (user?.onboarded === false) return redirect("/onboarding");
   return (
     <div>
       <ThreadCreate user={session?.user} />

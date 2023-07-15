@@ -5,7 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 import { nanoid } from "nanoid";
 import { usernameGenerator } from "./username";
-let isOnboarded = false;
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
   session: {
@@ -43,9 +43,6 @@ export const authOptions: NextAuthOptions = {
         return token;
       }
 
-      if (dbUser.onboarded) {
-        isOnboarded = true;
-      }
 
       if (!dbUser.username) {
         await db.user.update({
@@ -67,9 +64,6 @@ export const authOptions: NextAuthOptions = {
     },
 
     redirect({ url, baseUrl }) {
-      if (!isOnboarded) {
-        return "/onboarding";
-      }
       return "/";
     },
   },

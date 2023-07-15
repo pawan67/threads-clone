@@ -1,11 +1,20 @@
-import { FC } from 'react'
+import { getAuthSession } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
+import { FC } from "react";
 
-interface pageProps {
-  
-}
+interface pageProps {}
 
-const page: FC<pageProps> = ({}) => {
-  return <div>page</div>
-}
+const page: FC<pageProps> = async ({}) => {
+  const session = await getAuthSession();
+  const user = await db.user.findUnique({
+    where: {
+      id: session?.user?.id,
+    },
+  });
 
-export default page
+  if (user?.onboarded === false) return redirect("/onboarding");
+  return <div>page</div>;
+};
+
+export default page;

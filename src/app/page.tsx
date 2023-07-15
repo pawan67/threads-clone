@@ -16,6 +16,8 @@ async function HomePage() {
     },
   });
 
+  if (user?.onboarded === false) return redirect("/onboarding");
+
   const threads = await db.thread.findMany({
     take: 20,
     orderBy: {
