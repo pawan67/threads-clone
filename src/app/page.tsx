@@ -2,10 +2,13 @@ import Logo from "@/components/logo/Logo";
 import HomeThreads from "@/components/thread/HomeThreads";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
 import React from "react";
 
 async function HomePage() {
   const session = await getAuthSession();
+
+  if (!session) return redirect("/sign-in");
 
   const user = await db.user.findUnique({
     where: {

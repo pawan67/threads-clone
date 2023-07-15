@@ -11,6 +11,7 @@ import Logo from "../logo/Logo";
 
 interface NavbarProps {
   username?: any;
+  
 }
 
 const Navbar: FC<NavbarProps> = ({ username }) => {

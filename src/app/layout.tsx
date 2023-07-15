@@ -23,6 +23,8 @@ export default async function RootLayout({
   const session = await getAuthSession();
   const username = session?.user?.username;
 
+  const isUser = !!session?.user;
+
   return (
     <html lang="en">
       <head>
@@ -34,8 +36,9 @@ export default async function RootLayout({
         <Providers>
           <div className=" mx-auto max-w-3xl ">
             <div className=" flex max-w-3xl justify-center ">
-              <Navbar username={username} />
-              <main className="  container pt-5     relative  antialiased">
+              {isUser && <Navbar username={username} />}
+
+              <main className="  container  relative  antialiased">
                 {children}
               </main>
             </div>
