@@ -23,16 +23,17 @@ export default async function RootLayout({
   const session = await getAuthSession();
   const username = session?.user?.username;
 
-  
-
-  
   return (
     <html lang="en">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon.png"></link>
+        <meta name="theme-color" content="#0A0A0A" />
+      </head>
       <body className={cn(inter.className)}>
         <Providers>
           <div className=" mx-auto max-w-3xl ">
             <div className=" flex max-w-3xl justify-center ">
-
               <Navbar username={username} />
               <main className="  container pt-5     relative  antialiased">
                 {children}
