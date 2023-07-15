@@ -46,8 +46,8 @@ const Navbar: FC<NavbarProps> = ({ username }) => {
 
       {/* For desktop devices */}
 
-      <aside className="     hidden  md:block left-0 inset-y-0    ">
-        <div className=" flex flex-col w-full space-y-6 p-5  ">
+      <aside className="     hidden sticky  md:block left-0 inset-y-0    ">
+        <div className=" sticky top-0 flex flex-col w-full space-y-6 p-5  ">
           <Logo />
           {navigationUrls.map((navItem, index) => (
             <Link

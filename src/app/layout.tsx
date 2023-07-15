@@ -38,7 +38,7 @@ export default async function RootLayout({
             <div className=" flex max-w-3xl justify-center ">
               {isUser && <Navbar username={username} />}
 
-              <main className="  container  relative  antialiased">
+              <main className=" pt-5 container  relative  antialiased">
                 {children}
               </main>
             </div>

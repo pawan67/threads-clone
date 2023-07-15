@@ -27,7 +27,6 @@ function AuthenticationForm() {
 
   return (
     <div className=" flex justify-center items-center flex-col">
-
       <Logo />
       <h1 className=" mt-3 text-3xl font-bold gradient ">Threads</h1>
       <p className=" text-sm mt-3  text-muted-foreground ">

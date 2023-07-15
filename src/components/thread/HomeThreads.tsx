@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Thread from "./Thread";
 import ThreadComponent from "./ThreadComponent";
+import { Loader2 } from "lucide-react";
 
 interface HomeThreadsProps {
   user: User | null;
@@ -59,7 +60,27 @@ const HomeThreads: FC<HomeThreadsProps> = ({ user, threads }) => {
 
   return (
     <>
-     
+      {items.map((item, i) => {
+        if (i === items.length - 1)
+          return (
+            <div key={item.id} ref={ref}>
+              <ThreadComponent threads={items} data={item} />
+            </div>
+          );
+        return <ThreadComponent key={item.id} threads={items} data={item} />;
+      })}
+      <div className="w-full py-4 flex justify-center">
+        {items.length === 0 ? (
+          <div className="text-neutral-600 mt-4 text-center leading-loose">
+            There are no threads... <br />
+            Try making one!
+          </div>
+        ) : null}
+
+        {loading ? (
+          <Loader2 className="h-4 w-4 animate-spin text-neutral-600" />
+        ) : null}
+      </div>
     </>
   );
 };
