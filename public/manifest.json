@@ -1,7 +1,7 @@
 {
   "theme_color": "#0A0A0A",
   "background_color": "#0A0A0A",
-  "display": "minimal-ui",
+  "display": "fullscreen",
   "scope": "/",
   "start_url": "/",
   "name": "Threads",
