@@ -40,7 +40,7 @@ const Share: FC<ShareProps> = ({ data }) => {
     const shareData = {
       title: "Threads",
       text: `Check out this thread by ${data.author.name} on Threads`,
-      url: `${process.env.NEXT_PUBLIC_PRODUCTION_URL!}thread/${data.id}`,
+      url: `https://threads-meta.vercel.app/thread/${data.id}`,
     };
 
     if (navigator.share) navigator.share(shareData);
