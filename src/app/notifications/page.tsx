@@ -17,7 +17,9 @@ const page: FC<pageProps> = async ({}) => {
   return (
     <div className=" ">
       <h1 className="text-2xl font-semibold">Notifications</h1>
-      
+      <p className=" text-muted-foreground ">
+        Notifications are not yet implemented. Please check back later.{" "}
+      </p>
     </div>
   );
 };

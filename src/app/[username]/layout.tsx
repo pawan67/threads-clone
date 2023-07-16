@@ -25,7 +25,7 @@ export async function generateMetadata({
   });
 
   return metaTagsGenerator({
-    title: user?.name,
+    title: user?.name + " | Threads ",
     description: user?.bio,
     img: user?.image,
     url: `/${username}`,
