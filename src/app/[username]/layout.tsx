@@ -10,6 +10,28 @@ import { redirect } from "next/navigation";
 import { FC } from "react";
 import { followUser, unfollowUser } from "@/lib/actions";
 import SorryPageNotFound from "@/components/miscellaneous/SorryPageNotFound";
+import { Metadata } from "next";
+import { metaTagsGenerator } from "@/lib/utils";
+
+export async function generateMetadata({
+  params: { username },
+}: {
+  params: { username: string };
+}): Promise<Metadata> {
+  const user = await db.user.findUnique({
+    where: {
+      username: username,
+    },
+  });
+
+  return metaTagsGenerator({
+    title: user?.name,
+    description: user?.bio,
+    img: user?.image,
+    url: `/${username}`,
+  });
+}
+
 interface layoutProps {
   params: {
     username: string;
@@ -51,6 +73,11 @@ const layout: FC<layoutProps> = async ({ params, children }) => {
     ? false
     : user.followedBy.some((follow) => follow.id == getSelf?.id);
 
+  const allUsernames = await db.user.findMany({
+    select: {
+      username: true,
+    },
+  });
   return (
     <>
       <div className=" relative  ">
@@ -66,6 +93,7 @@ const layout: FC<layoutProps> = async ({ params, children }) => {
           <SignOut />
         </div>
         <Profile
+          allUsernames={allUsernames.map((user) => user.username)}
           followUser={followUser}
           unfollowUser={unfollowUser}
           user={user}

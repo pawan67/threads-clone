@@ -2,12 +2,14 @@ import { useToast } from "@/lib/use-toast";
 import { validateUsername } from "@/lib/username";
 import { FC, useState, useTransition } from "react";
 import { Button } from "../ui/button";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Pencil } from "lucide-react";
 import { Input } from "../ui/input";
 import { Card, CardContent } from "../ui/card";
 import { Label } from "../ui/label";
 import Filter from "bad-words";
 import { onboardData } from "@/lib/actions";
+import Image from "next/image";
+import { uploadImage } from "@/lib/uploadImage";
 interface OnboardingProfileUpdateProps {
   userData: {
     id: string;
@@ -29,16 +31,51 @@ const OnboardingProfileUpdate: FC<OnboardingProfileUpdateProps> = ({
   const [username, setUsername] = useState(userData.username);
   const [name, setName] = useState(userData.name);
   const [bio, setBio] = useState(userData.bio || "");
+  const [image, setImage] = useState(userData.image || "");
+  const [loading, setLoading] = useState(false);
+
+  const handleUpload = async (e: any) => {
+    setLoading(true);
+
+    const file = e.target.files[0];
+    const imgUrl = await uploadImage(file);
+    setImage(imgUrl);
+    setLoading(false);
+  };
 
   const { toast } = useToast();
   const filter = new Filter();
 
   return (
     <>
-      <Card className="w-full pt-6">
+      <Card className="w-full border-none pt-6">
         <CardContent>
           <form>
             <div className="grid w-full items-center gap-4">
+              <div className=" flex justify-center">
+                <div className=" relative">
+                  <Image
+                    className=" rounded-full"
+                    alt={userData.name}
+                    src={image as string}
+                    width={80}
+                    height={80}
+                  />
+
+                  <label htmlFor="profileInput">
+                    <Pencil className=" absolute bottom-0 right-0  rounded-full " />
+                  </label>
+                  <input
+                    onChange={handleUpload}
+                    type="file"
+                    accept="image/png, image/gif, image/jpeg"
+                    id="profileInput"
+                    name="profileInput"
+                    hidden
+                  />
+                </div>
+              </div>
+
               <div className="flex flex-col space-y-2">
                 <Label htmlFor="username">Username</Label>
                 <Input

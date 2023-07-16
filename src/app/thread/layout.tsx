@@ -5,6 +5,8 @@ import { getAuthSession } from "@/lib/auth";
 import BackButton from "@/components/thread/BackButton";
 import { db } from "@/lib/db";
 
+
+
 export default async function ThreadPageLayout({
   children,
 }: {

@@ -28,11 +28,11 @@ const Privacy: FC<PrivacyProps> = ({}) => {
           </CardHeader>
         </Card>
       </div>
-      <Link href="/">
+      <a href="/">
         <Button variant="secondary" className="w-full mt-6">
           Done
         </Button>
-      </Link>
+      </a>
     </>
   );
 };

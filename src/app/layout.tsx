@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, metaTagsGenerator } from "@/lib/utils";
 import "./globals.css";
 import "./styles/editor.css";
 import type { Metadata } from "next";
@@ -11,9 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Threads",
-};
+export const metadata = metaTagsGenerator({});
 
 export default async function RootLayout({
   children,

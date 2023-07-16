@@ -21,6 +21,7 @@ export async function onboardData(
       onboarded: true,
     },
   });
+  
   revalidatePath("/");
 }
 
@@ -37,20 +38,19 @@ export const followUser = async (
     "pathname",
     pathname
   );
-  
-    await db.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        followedBy: {
-          connect: {
-            id: followingId,
-          },
+
+  await db.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      followedBy: {
+        connect: {
+          id: followingId,
         },
       },
-    });
- 
+    },
+  });
 
   revalidatePath(pathname);
 };

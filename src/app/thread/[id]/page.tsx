@@ -10,6 +10,29 @@ import Link from "next/link";
 
 export const revalidate = 0;
 
+import { Metadata } from "next";
+import { metaTagsGenerator } from "@/lib/utils";
+
+export async function generateMetadata({
+  params: { id },
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const thread = await db.thread.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      author: true,
+    },
+  });
+
+  return metaTagsGenerator({
+    title: `Checkout this thread by ${thread?.author.name}`,
+    url: `/thread/${id}`,
+  });
+}
+
 export default async function ThreadDetailedPage({
   params,
 }: {

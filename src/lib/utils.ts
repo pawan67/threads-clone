@@ -86,3 +86,56 @@ export const nFormatter = (num: number, digits: number) => {
     ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol
     : "0";
 };
+
+export const metaTagsGenerator = ({
+  title,
+  description,
+  img,
+  url,
+}: {
+  title?: string;
+  description?: string;
+  img?: string;
+  url?: string;
+}) => {
+  const metaObject = {
+    title: title || "Threads | Meta's new app clone",
+    description:
+      description ||
+      "Threads | Meta's new app clone created using Next.js 13 Server , TypeScript, Tailwind CSS, and Prisma.",
+
+    openGraph: {
+      type: "website",
+      locale: "en_IE",
+      url:
+        `${process.env.NEXT_PUBLIC_PRODUCTION_URL}${url}` ||
+        process.env.NEXT_PUBLIC_PRODUCTION_URL,
+      title: title || "",
+      description:
+        description ||
+        "Threads | Meta's new app clone created using Next.js 13 Server , TypeScript, Tailwind CSS, and Prisma. ",
+      images: [
+        {
+          url: img || "https://i.imgur.com/iwZOWHI.png",
+          width: 800,
+          height: 450,
+        },
+        {
+          url: img || "https://i.imgur.com/iwZOWHI.png",
+          width: 800,
+          height: 450,
+        },
+      ],
+      site_name: "Cinephilex",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: title || "Threads | Meta's new app clone",
+      description: description || "Threads | Meta's new app clone",
+      // creator: "@goldeninfotech",
+      images: [img || "https://i.imgur.com/iwZOWHI.png"],
+    },
+  };
+
+  return metaObject;
+};

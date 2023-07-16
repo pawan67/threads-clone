@@ -7,16 +7,19 @@ import { useToast } from "@/lib/use-toast";
 import { usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
+import EditProfile from "./EditProfile";
 
 interface ProfileProps {
   user: User & {
     followedBy: User[];
   };
+
   getSelf: User | null;
   isFollowing: boolean;
   self: boolean;
   unfollowUser: (userId: string, followingId: string, pathname: string) => void;
   followUser: (userId: string, followingId: string, pathname: string) => void;
+  allUsernames: string[];
 }
 
 const Profile: FC<ProfileProps> = ({
@@ -26,11 +29,30 @@ const Profile: FC<ProfileProps> = ({
   isFollowing,
   followUser,
   unfollowUser,
+  allUsernames,
 }) => {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
   const pathname = usePathname();
   if (!getSelf) return null;
+
+  const userData = {
+    id: user.id,
+    username: user.username,
+    name: user.name,
+    bio: user.bio,
+    image: user.image,
+  };
+
+  const shareProfile = () => {
+    const shareData = {
+      title: "Threads",
+      text: `Check out ${user.name}'s profile on Threads`,
+      url: `${process.env.NEXT_PUBLIC_PRODUCTION_URL!}${user.username}`,
+    };
+    if (navigator.share) navigator.share(shareData);
+  };
+
   return (
     <div>
       <div className=" flex flex-col   space-y-3">
@@ -62,10 +84,13 @@ const Profile: FC<ProfileProps> = ({
 
         {self ? (
           <div className=" flex space-x-2  mt-4">
-            <Button size="lg" className=" w-full" variant="outline">
-              Edit profile
-            </Button>
-            <Button size="lg" className="w-full" variant="outline">
+            <EditProfile userData={userData} allUsernames={allUsernames} />
+            <Button
+              onClick={shareProfile}
+              size="lg"
+              className="w-full"
+              variant="outline"
+            >
               Share profile
             </Button>
           </div>
