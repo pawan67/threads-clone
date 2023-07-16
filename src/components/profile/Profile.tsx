@@ -48,7 +48,7 @@ const Profile: FC<ProfileProps> = ({
     const shareData = {
       title: "Threads",
       text: `Check out ${user.name}'s profile on Threads`,
-      url: `${process.env.NEXT_PUBLIC_PRODUCTION_URL!}${user.username}`,
+      url: `https://threads-meta.vercel.app/${user.username}`,
     };
     if (navigator.share) navigator.share(shareData);
   };

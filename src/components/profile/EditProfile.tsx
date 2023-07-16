@@ -37,7 +37,7 @@ const EditProfile: FC<Props> = ({ userData, allUsernames }) => {
   const [bio, setBio] = useState(userData.bio || "");
   const [image, setImage] = useState(userData.image || "");
   const [loading, setLoading] = useState(false);
-
+  const [open, setOpen] = useState(false);
   const handleUpload = async (e: any) => {
     setLoading(true);
 
@@ -52,7 +52,7 @@ const EditProfile: FC<Props> = ({ userData, allUsernames }) => {
 
   return (
     <>
-      <Dialog>
+      <Dialog open={open} onOpenChange={() => setOpen(!open)}>
         <DialogTrigger className=" w-full">
           <Button size="lg" className=" w-full" variant="outline">
             Edit profile
@@ -166,33 +166,35 @@ const EditProfile: FC<Props> = ({ userData, allUsernames }) => {
                     </div>
                   </div>
                 </form>
+                <Button
+                  onClick={() => {
+                    startTransition(() => {
+                      onboardData(username, name, bio, image, userData.id);
+                    });
+
+                    toast({
+                      title: "Updated user data",
+                    });
+                    setOpen(false);
+                  }}
+                  variant="secondary"
+                  className="w-full mt-6"
+                  disabled={
+                    name.length === 0 ||
+                    name.length > 16 ||
+                    username.length === 0 ||
+                    username.length > 16 ||
+                    bio.length > 100 ||
+                    (allUsernames.includes(username) &&
+                      username !== userData.username) ||
+                    !validateUsername(username) ||
+                    filter.isProfane(username)
+                  }
+                >
+                  Update
+                </Button>
               </CardContent>
             </Card>
-            <Button
-              onClick={() => {
-                startTransition(() => {
-                  onboardData(username, name, bio, userData.image, userData.id);
-                });
-                toast({
-                  title: "Updated user data",
-                });
-              }}
-              variant="secondary"
-              className="w-full mt-6"
-              disabled={
-                name.length === 0 ||
-                name.length > 16 ||
-                username.length === 0 ||
-                username.length > 16 ||
-                bio.length > 100 ||
-                (allUsernames.includes(username) &&
-                  username !== userData.username) ||
-                !validateUsername(username) ||
-                filter.isProfane(username)
-              }
-            >
-              Update
-            </Button>
           </DialogHeader>
         </DialogContent>
       </Dialog>

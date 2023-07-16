@@ -57,7 +57,13 @@ export const unlikeThread = async (
   revalidatePath(pathname);
 };
 
-export const deleteThread = async (id: string, pathname: string) => {
+export async function deleteThread(id: string, pathname: string) {
+  await db.likes.deleteMany({
+    where: {
+      threadId: id,
+    },
+  });
+
   await db.thread.delete({
     where: {
       id: id,
@@ -65,7 +71,7 @@ export const deleteThread = async (id: string, pathname: string) => {
   });
 
   revalidatePath(pathname);
-};
+}
 
 export async function replyToThread(
   content: any,
