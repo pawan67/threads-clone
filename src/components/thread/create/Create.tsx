@@ -49,6 +49,7 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
         description: "Replied to thread",
       });
       router.push(`/thread/${thread?.id}`);
+      revalidatePath(`/thread/${thread?.id}`);
     }
   }, [isPending]);
 

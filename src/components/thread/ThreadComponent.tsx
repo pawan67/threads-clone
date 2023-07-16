@@ -99,7 +99,10 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
               name={data.author.name}
             />
             {comment ? null : (
-              <div className="flex items-center space-x-3 ">
+              <Link
+                href={`/thread/${data.id}`}
+                className="flex items-center space-x-3 "
+              >
                 <span className="text-sm text-muted-foreground">
                   {formatTimeToNow(data.createdAt)}
                 </span>
@@ -108,7 +111,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
                   id={data.id}
                   author={data.author.id}
                 />
-              </div>
+              </Link>
             )}
           </div>
 

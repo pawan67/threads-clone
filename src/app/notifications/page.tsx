@@ -1,3 +1,4 @@
+import Logo from "@/components/logo/Logo";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
@@ -15,9 +16,12 @@ const page: FC<pageProps> = async ({}) => {
 
   if (user?.onboarded === false) return redirect("/onboarding");
   return (
-    <div className=" ">
-      <h1 className="text-2xl font-semibold">Notifications</h1>
-      <p className=" text-muted-foreground ">
+    <div className="  ">
+      <div className="  flex  justify-center">
+        <Logo />
+      </div>
+      <h1 className="text-2xl font-semibold text-center">Notifications</h1>
+      <p className=" text-muted-foreground text-center ">
         Notifications are not yet implemented. Please check back later.{" "}
       </p>
     </div>
