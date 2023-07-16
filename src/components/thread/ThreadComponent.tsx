@@ -5,6 +5,9 @@ import Link from "next/link";
 import { FC } from "react";
 import loop from "@/assets/loop.svg";
 import AuthorNameLink from "./AuthorNameLink";
+import UserActions from "./controls";
+import MoreMenu from "./MoreMenu";
+import { formatTimeToNow } from "@/lib/utils";
 interface ThreadComponentProps {
   data: Prisma.ThreadGetPayload<{
     include: {
@@ -58,7 +61,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
     <>
       <div className={mainClass}>
         <div className="flex flex-col items-center justify-between">
-          <div className="w-8 h-8 mt-1 rounded-full bg-neutral-600 overflow-hidden">
+          <div className="w-8 h-8 mt-1 rounded-full  overflow-hidden">
             <Link href={`/${data.author.username}`}>
               <Image
                 src={data.author.image}
@@ -94,23 +97,35 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
               username={data.author.username}
               name={data.author.name}
             />
+            {comment ? null : (
+              <div className="flex items-center space-x-3 ">
+                <span className="text-sm text-muted-foreground">
+                  {formatTimeToNow(data.createdAt)}
+                </span>
+                <MoreMenu
+                  name={data.author.name}
+                  id={data.id}
+                  author={data.author.id}
+                />
+              </div>
+            )}
           </div>
 
           <Link href={`/thread/${data.id}`}>
-            <div className="text-base/relaxed pb-3 text-left whitespace-pre-line">
+            <div className="text-base/relaxed  text-left whitespace-pre-line">
               {data.content?.text}
             </div>
           </Link>
           <div>
             {data.content?.images.length > 0 && (
-              <div className=" my-4 grid grid-cols-2 gap-3">
+              <div className=" my-2 grid grid-cols-2 gap-3">
                 <AntImage.PreviewGroup>
                   {data.content?.images.map((image: string, index: number) => (
                     <div className="   ">
                       <AntImage
                         alt={data.author.name}
                         key={index}
-                        className=" border aspect-[4/3] object-cover rounded-md"
+                        className=" shadow-xl border aspect-[4/3] object-cover rounded-md"
                         src={image}
                       />
                     </div>
@@ -120,9 +135,12 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
             )}
           </div>
 
-          {/* {comment ? null : (
+          {comment ? null : (
             <>
-              <Controls numPosts={posts ? posts.length : -1} data={data} />
+              <UserActions
+                data={data}
+                numPosts={threads ? threads.length : -1}
+              />
               <div className="flex text-neutral-600 items-center space-x-2">
                 {data.children.length > 0 ? (
                   <div>
@@ -141,7 +159,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
                 ) : null}
               </div>
             </>
-          )} */}
+          )}
         </div>
       </div>
     </>

@@ -50,9 +50,9 @@ model User {
   accounts      Account[]
   sessions      Session[]
   threads       Thread[]
-  
-  followedBy    User[]    @relation("UserFollows")
-  following     User[]    @relation("UserFollows")
+
+  followedBy User[] @relation("UserFollows")
+  following  User[] @relation("UserFollows")
 
   role      Role     @default(USER)
   createdAt DateTime @default(now())
@@ -69,7 +69,6 @@ model Thread {
   createdAt DateTime @default(now())
   parentId  String?
   parent    Thread?  @relation("ParentChildren", fields: [parentId], references: [id])
-
   children  Thread[] @relation("ParentChildren")
   updatedAt DateTime @default(now()) @updatedAt
   likes     Likes[]
@@ -82,7 +81,6 @@ model Likes {
   user      User     @relation(fields: [userId], references: [id])
   userId    String
   createdAt DateTime @default(now())
-
   @@id([threadId, userId])
 }
 

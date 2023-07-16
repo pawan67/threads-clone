@@ -18,5 +18,8 @@ const nextConfig = {
   },
 };
 
-module.exports = withPWA(nextConfig);
-// module.exports = nextConfig;
+if (process.env.NODE_ENV === "production") {
+  module.exports = withPWA(nextConfig);
+} else {
+  module.exports = nextConfig;
+}

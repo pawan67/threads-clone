@@ -9,6 +9,7 @@ import { Instagram } from "lucide-react";
 import { redirect } from "next/navigation";
 import { FC } from "react";
 import { followUser, unfollowUser } from "@/lib/actions";
+import SorryPageNotFound from "@/components/miscellaneous/SorryPageNotFound";
 interface layoutProps {
   params: {
     username: string;
@@ -41,17 +42,7 @@ const layout: FC<layoutProps> = async ({ params, children }) => {
   if (getSelf?.onboarded === false) return redirect("/onboarding");
 
   if (!user) {
-    return (
-      <div className=" flex flex-col space-y-3 items-center justify-center">
-        <Logo />
-        <h1 className=" text-center  text-lg font-semibold">
-          Sorry, this page isn't available
-        </h1>
-        <p className=" text-center text-muted-foreground">
-          The link you followed may be broken, or the page may have been removed
-        </p>
-      </div>
-    );
+    return <SorryPageNotFound />;
   }
 
   const self = getSelf?.username === username;

@@ -10,7 +10,6 @@ import { redirect } from "next/navigation";
 interface pageProps {}
 
 const page: FC<pageProps> = async ({}) => {
-  
   const session = await getAuthSession();
   const user = await db.user.findUnique({
     where: {
@@ -19,6 +18,9 @@ const page: FC<pageProps> = async ({}) => {
   });
 
   if (user?.onboarded === false) return redirect("/onboarding");
+
+  if (!session?.user) return redirect("/sign-in");
+
   return (
     <div>
       <ThreadCreate user={session?.user} />
