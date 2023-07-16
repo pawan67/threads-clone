@@ -1,3 +1,4 @@
+"use client";
 import { Prisma, Thread, User } from "@prisma/client";
 import Image from "next/image";
 import { Image as AntImage } from "antd";

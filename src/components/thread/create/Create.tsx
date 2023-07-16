@@ -9,22 +9,48 @@ import Image from "next/image";
 import axios from "axios";
 import { X } from "lucide-react";
 import { User } from "next-auth";
-import { useRouter } from "next/navigation";
-import { FC, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { FC, useEffect, useState, useTransition } from "react";
 import { ImAttachment } from "react-icons/im";
 import TextareaAutosize from "react-textarea-autosize";
+import { replyToThread } from "@/lib/actions";
+import { Prisma } from "@prisma/client";
 interface CreateProps {
   isReply?: boolean;
   user: User;
+  thread: Prisma.ThreadGetPayload<{
+    include: {
+      author: true;
+      children: {
+        include: {
+          author: true;
+        };
+      };
+      parent: true;
+      likes: true;
+    };
+  }>;
 }
 
-const Create: FC<CreateProps> = ({ isReply = false, user }) => {
+const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
   const [loading, setLoading] = useState(false);
   const [contentJson, setContentJson] = useState<any>({
     text: "",
     images: [],
   });
+  const [repliedClicked, setRepliedClicked] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  // reply to thread handling
+  useEffect(() => {
+    if (!isPending && repliedClicked) {
+      toast({
+        description: "Replied to thread",
+      });
+      router.push(`/thread/${thread.id}`);
+    }
+  }, [isPending]);
 
+  const pathname = usePathname();
   const isContentEmpty = () => {
     return contentJson.text === "" && contentJson.images.length === 0;
   };
@@ -178,19 +204,35 @@ const Create: FC<CreateProps> = ({ isReply = false, user }) => {
               (isLoading || isContentEmpty()) && " text-secondary "
             } `}
           >
-            Anyone can reply
+            {isReply ? "Replying to thread" : "Anyone can reply to this thread"}
           </div>
 
-          <Button
-            onClick={() => createThread()}
-            disabled={isContentEmpty() || isLoading}
-            type="submit"
-            form="thread-post-form"
-            className=" text-blue-400"
-            variant="secondary"
-          >
-            {isLoading ? "Posting..." : "Post"}
-          </Button>
+          {isReply ? (
+            <Button
+              onClick={() => {
+                startTransition(() => {
+                  replyToThread(contentJson, user.id, thread.id, pathname);
+                });
+                setRepliedClicked(true);
+              }}
+              disabled={isContentEmpty()}
+              className=" text-blue-400"
+              variant="secondary"
+            >
+              Submit
+            </Button>
+          ) : (
+            <Button
+              onClick={() => createThread()}
+              disabled={isContentEmpty() || isLoading}
+              type="submit"
+              form="thread-post-form"
+              className=" text-blue-400"
+              variant="secondary"
+            >
+              {isLoading ? "Posting..." : "Post"}
+            </Button>
+          )}
         </div>
       </div>
     </div>

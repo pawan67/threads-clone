@@ -29,6 +29,7 @@ export default function MoreMenu({
 }) {
   const { data } = useSession();
   const user = data?.user;
+  
 
   const { toast } = useToast();
   const pathname = usePathname();
@@ -39,6 +40,8 @@ export default function MoreMenu({
   const [open, setOpen] = useState(false);
 
   const self = user?.id === author;
+
+  
 
   useEffect(() => {
     if (deleted && !isPending) {
@@ -64,11 +67,10 @@ export default function MoreMenu({
         {" "}
         <MoreHorizontal className="w-5 h-5" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent className=" bg-background" align="end">
         {self ? (
           <DropdownMenuItem
             onClick={(e) => {
-              e.stopPropagation();
               e.preventDefault();
               startTransition(() => deleteThread(id, pathname));
               setDeleted(true);
@@ -88,8 +90,6 @@ export default function MoreMenu({
           <>
             <DropdownMenuItem
               onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
                 toast({
                   title: name + " has been blocked",
                 });
@@ -101,8 +101,6 @@ export default function MoreMenu({
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
                 toast({
                   title: name + " has been reported",
                 });

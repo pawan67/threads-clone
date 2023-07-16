@@ -32,7 +32,7 @@ const ThreadComment: FC<pageProps> = async ({ params }) => {
 
   return (
     <div>
-      <CreateComment  itemData={thread} />
+      <CreateComment thread={thread} />
     </div>
   );
 };

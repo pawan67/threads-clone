@@ -14,9 +14,9 @@ import ThreadComponent from "../ThreadComponent";
 import Create from "../create/Create";
 
 export function CreateComment({
-  itemData,
+  thread,
 }: {
-  itemData: Prisma.ThreadGetPayload<{
+  thread: Prisma.ThreadGetPayload<{
     include: {
       author: true;
       children: {
@@ -51,10 +51,12 @@ export function CreateComment({
 
   if (!user) return null;
 
+  
+
   return (
     <div>
-      <ThreadComponent data={itemData} noLink comment />
-      <Create user={user} isReply />
+      <ThreadComponent data={thread} noLink comment />
+      <Create thread={thread} user={user} isReply />
 
       
     </div>
