@@ -27,7 +27,6 @@ const HomeThreads: FC<HomeThreadsProps> = ({ user, threads }) => {
   const [noMore, setNoMore] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  console.log(threads);
   const { ref, inView } = useInView();
 
   useEffect(() => {

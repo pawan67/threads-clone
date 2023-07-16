@@ -33,8 +33,8 @@ const ThreadCreate: FC<ThreadCreateProps> = ({ user, isReply }) => {
     <>
       <div className=" flex items-center justify-between space-x-3">
         <span className=" font-semibold">New Thread</span>
-        <Button onClick={() => router.back()} variant="outline">
-          <X className=" mr-2" size={16} /> Cancel
+        <Button onClick={() => router.back()} variant="ghost">
+          Cancel
         </Button>
       </div>
       <Separator className=" my-3" />

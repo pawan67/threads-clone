@@ -14,7 +14,12 @@ const page: FC<pageProps> = async ({}) => {
   });
 
   if (user?.onboarded === false) return redirect("/onboarding");
-  return <div>page</div>;
+  return (
+    <div className=" ">
+      <h1 className="text-2xl font-semibold">Notifications</h1>
+      
+    </div>
+  );
 };
 
 export default page;

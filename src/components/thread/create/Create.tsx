@@ -1,4 +1,6 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { revalidatePath } from "next/cache";
+
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/lib/use-toast";
@@ -18,7 +20,7 @@ import { Prisma } from "@prisma/client";
 interface CreateProps {
   isReply?: boolean;
   user: User;
-  thread: Prisma.ThreadGetPayload<{
+  thread?: Prisma.ThreadGetPayload<{
     include: {
       author: true;
       children: {
@@ -46,7 +48,7 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
       toast({
         description: "Replied to thread",
       });
-      router.push(`/thread/${thread.id}`);
+      router.push(`/thread/${thread?.id}`);
     }
   }, [isPending]);
 
@@ -76,7 +78,9 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
     },
 
     onSuccess: (data) => {
-      router.push(`/thread/${data.id}`);
+      router.push(`/`);
+      revalidatePath("/");
+
       return toast({
         description: "Thread was created successfully",
       });
@@ -211,7 +215,12 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
             <Button
               onClick={() => {
                 startTransition(() => {
-                  replyToThread(contentJson, user.id, thread.id, pathname);
+                  replyToThread(
+                    contentJson,
+                    user.id,
+                    thread?.id as string,
+                    `/thread/${thread?.id}`
+                  );
                 });
                 setRepliedClicked(true);
               }}

@@ -2,6 +2,7 @@ import { FC } from "react";
 import Link from "next/link";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import ThreadComponent from "@/components/thread/ThreadComponent";
 interface pageProps {
   params: {
     username: string;
@@ -53,7 +54,7 @@ const page: FC<pageProps> = async ({ params }) => {
           No threads posted yet.
         </div>
       ) : (
-        ""
+        threads.map((thread) => <ThreadComponent data={thread} />)
       )}
     </>
   );

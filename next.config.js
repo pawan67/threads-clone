@@ -16,12 +16,6 @@ const nextConfig = {
   images: {
     domains: ["lh3.googleusercontent.com", "res.cloudinary.com"],
   },
-  fastRefresh: true,
-  concurrentFeatures: true,
-  productionBrowserSourceMaps: false, // Disable source maps in development
-  optimizeFonts: false, // Disable font optimization
-  minify: false, // Disable minification
-  swcMinify: true,
 };
 
 if (process.env.NODE_ENV === "production") {
