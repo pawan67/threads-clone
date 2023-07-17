@@ -63,10 +63,10 @@ const HomeThreads: FC<HomeThreadsProps> = ({ user, threads }) => {
         if (i === items.length - 1)
           return (
             <div key={item.id} ref={ref}>
-              <ThreadComponent threads={items} data={item} />
+              <ThreadComponent role={user?.role} threads={items} data={item} />
             </div>
           );
-        return <ThreadComponent key={item.id} threads={items} data={item} />;
+        return <ThreadComponent role={user?.role} key={item.id} threads={items} data={item} />;
       })}
       <div className="w-full py-4 flex justify-center">
         {items.length === 0 ? (

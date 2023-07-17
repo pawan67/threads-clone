@@ -34,6 +34,7 @@ export function SearchUser({
         <div>
           <div className="font-semibold">{user.username}</div>
           <div className="text-neutral-600 -mt-1 font-medium">{user.name}</div>
+          
           <div className="mt-2 text-sm">
             {nFormatter(user.followedBy.length, 1)}{" "}
             {user.followedBy.length === 1 ? "follower" : "followers"}

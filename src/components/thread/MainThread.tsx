@@ -40,12 +40,14 @@ interface ThreadComponentProps {
 
   parent?: boolean;
   noLink?: boolean;
+  role?: string;
 }
 
 const MainThread: FC<ThreadComponentProps> = ({
   data,
   comment = false,
   threads,
+  role,
 }) => {
   return (
     <>
@@ -62,6 +64,7 @@ const MainThread: FC<ThreadComponentProps> = ({
               />
             </div>
             <AuthorNameLink
+              role={data.author.role}
               username={data.author.username}
               name={data.author.name}
             />
@@ -74,6 +77,7 @@ const MainThread: FC<ThreadComponentProps> = ({
               name={data.author.name}
               id={data.id}
               author={data.author.id}
+              role={data.author.role}
             />
           </div>
         </div>

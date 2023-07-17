@@ -41,6 +41,7 @@ interface ThreadComponentProps {
 
   parent?: boolean;
   noLink?: boolean;
+  role?: string;
 }
 
 const ThreadComponent: FC<ThreadComponentProps> = ({
@@ -50,6 +51,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
   noLink = false,
 
   parent = false,
+  role,
 }) => {
   const mainClass = parent
     ? "px-3 pt-4 space-x-2 flex font-light"
@@ -96,6 +98,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
         <div className="w-full space-y-1">
           <div className="w-full flex items-center justify-between">
             <AuthorNameLink
+              role={data.author.role}
               username={data.author.username}
               name={data.author.name}
             />
@@ -108,6 +111,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
                   {formatTimeToNow(data.createdAt)}
                 </span>
                 <MoreMenu
+                  role={role}
                   name={data.author.name}
                   id={data.id}
                   author={data.author.id}

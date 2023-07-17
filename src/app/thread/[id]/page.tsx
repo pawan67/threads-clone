@@ -12,6 +12,7 @@ export const revalidate = 0;
 
 import { Metadata } from "next";
 import { metaTagsGenerator } from "@/lib/utils";
+import { getAuthSession } from "@/lib/auth";
 
 export async function generateMetadata({
   params: { id },
@@ -39,6 +40,7 @@ export default async function ThreadDetailedPage({
   params: { id: string };
 }) {
   const { id } = params;
+  const session = await getAuthSession();
 
   const thread = await db.thread.findUnique({
     where: {
@@ -78,6 +80,12 @@ export default async function ThreadDetailedPage({
     },
   });
 
+  const user = await db.user.findUnique({
+    where: {
+      id: session?.user?.id,
+    },
+  });
+
   if (!thread) {
     return (
       <div className="text-center text-neutral-600">thread not found.</div>
@@ -107,11 +115,16 @@ export default async function ThreadDetailedPage({
         </Link>
       ) : null}
       {thread.parent ? (
-        <ThreadComponent key={thread.parent.id} parent data={thread.parent} />
+        <ThreadComponent
+          role={user?.role}
+          key={thread.parent.id}
+          parent
+          data={thread.parent}
+        />
       ) : null}
       <MainThread key={thread.id} data={thread} />
       {thread.children.map((child) => (
-        <ThreadComponent key={child.id} data={child} />
+        <ThreadComponent role={user?.role} key={child.id} data={child} />
       ))}
     </>
   );

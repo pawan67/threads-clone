@@ -21,15 +21,16 @@ export default function MoreMenu({
   name,
   mainPage = false,
   id,
+  role,
 }: {
   author: string;
   name: string;
   mainPage?: boolean;
   id: string;
+  role?: string;
 }) {
   const { data } = useSession();
   const user = data?.user;
-  
 
   const { toast } = useToast();
   const pathname = usePathname();
@@ -40,8 +41,6 @@ export default function MoreMenu({
   const [open, setOpen] = useState(false);
 
   const self = user?.id === author;
-
-  
 
   useEffect(() => {
     if (deleted && !isPending) {
@@ -68,7 +67,7 @@ export default function MoreMenu({
         <MoreHorizontal className="w-5 h-5" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className=" bg-background" align="end">
-        {self ? (
+        {role === "ADMIN" || self ? (
           <DropdownMenuItem
             onClick={(e) => {
               e.preventDefault();
