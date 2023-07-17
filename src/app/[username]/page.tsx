@@ -24,6 +24,9 @@ const page: FC<pageProps> = async ({ params }) => {
       authorId: user?.id,
       parent: null,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
     include: {
       author: true,
       children: {
