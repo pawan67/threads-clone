@@ -9,11 +9,10 @@ import { useMutation } from "@tanstack/react-query";
 import { Image as AntdImage } from "antd";
 import Image from "next/image";
 import axios from "axios";
-import { X } from "lucide-react";
+import { Paperclip, X } from "lucide-react";
 import { User } from "next-auth";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useEffect, useState, useTransition } from "react";
-import { ImAttachment } from "react-icons/im";
 import TextareaAutosize from "react-textarea-autosize";
 import { replyToThread } from "@/lib/actions";
 import { Prisma } from "@prisma/client";
@@ -192,9 +191,10 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
                   // @ts-ignore
                   onChange={(e) => imageUploader(e.target.files)}
                   type="file"
+                  accept="image/*"
                   hidden
                 />
-                <ImAttachment size={16} />
+                <Paperclip size={16} />
               </label>
             </Button>
           )}

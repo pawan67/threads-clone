@@ -76,8 +76,8 @@ export default async function SearchPage({
       });
 
   return (
-    <>
-      <div className="px-3 mb-1">
+    <div className=" pb-10">
+      <div className="px-3 mb-3">
         <div className="text-2xl font-semibold pt-8 pb-5">Search</div>
         <Bar />
       </div>
@@ -102,6 +102,6 @@ export default async function SearchPage({
           })}
         </>
       )}
-    </>
+    </div>
   );
 }

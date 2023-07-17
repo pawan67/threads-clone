@@ -7,8 +7,20 @@ import { Input } from "../ui/input";
 import { Card, CardContent } from "../ui/card";
 import { Label } from "../ui/label";
 import Filter from "bad-words";
-import { onboardData } from "@/lib/actions";
+import { deleteAccount, onboardData } from "@/lib/actions";
 import Image from "next/image";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { uploadImage } from "@/lib/uploadImage";
 import {
   Dialog,
@@ -18,6 +30,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { signOut } from "next-auth/react";
 
 interface Props {
   userData: {
@@ -193,6 +206,41 @@ const EditProfile: FC<Props> = ({ userData, allUsernames }) => {
                 >
                   Update
                 </Button>
+
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button className=" w-full mt-3 " variant="destructive">
+                      Delete account
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you absolutely sure?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently
+                        delete your account and remove your data from our
+                        servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => {
+                          startTransition(() => {
+                            deleteAccount(userData.id);
+                          });
+                          toast({
+                            title: "Deleted user account",
+                          });
+                        }}
+                      >
+                        Continue
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </CardContent>
             </Card>
           </DialogHeader>

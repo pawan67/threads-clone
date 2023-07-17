@@ -9,6 +9,7 @@ import AuthorNameLink from "./AuthorNameLink";
 import UserActions from "./controls";
 import MoreMenu from "./MoreMenu";
 import { formatTimeToNow } from "@/lib/utils";
+import Others from "./Others";
 interface ThreadComponentProps {
   data: Prisma.ThreadGetPayload<{
     include: {
@@ -90,7 +91,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
               </div>
             ) : null}
           </div>
-          {/* {comment || parent ? null : <Others others={data.children} />} */}
+          {comment || parent ? null : <Others others={data.children} />}
         </div>
         <div className="w-full space-y-1">
           <div className="w-full flex items-center justify-between">

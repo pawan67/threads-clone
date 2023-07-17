@@ -21,7 +21,7 @@ export async function onboardData(
       onboarded: true,
     },
   });
-  
+
   revalidatePath("/");
 }
 
@@ -74,3 +74,25 @@ export const unfollowUser = async (
   });
   revalidatePath(pathname);
 };
+
+export async function deleteAccount(userId: string) {
+  await db.user.delete({
+    where: {
+      id: userId,
+    },
+  });
+
+  await db.thread.deleteMany({
+    where: {
+      authorId: userId,
+    },
+  });
+
+  await db.likes.deleteMany({
+    where: {
+      userId,
+    },
+  });
+
+  
+}
