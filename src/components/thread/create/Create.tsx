@@ -9,7 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Image as AntdImage } from "antd";
 import Image from "next/image";
 import axios from "axios";
-import { Paperclip, X } from "lucide-react";
+import { Loader2Icon, Paperclip, X } from "lucide-react";
 import { User } from "next-auth";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useEffect, useState, useTransition } from "react";
@@ -184,18 +184,23 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
 
           {isImagesEmpty() && (
             <Button className=" p-3" variant="outline">
-              <label htmlFor="imageUpload">
-                <input
-                  multiple
-                  id="imageUpload"
-                  // @ts-ignore
-                  onChange={(e) => imageUploader(e.target.files)}
-                  type="file"
-                  accept="image/*"
-                  hidden
-                />
-                <Paperclip size={16} />
-              </label>
+              {loading ? (
+                <Loader2Icon size={20} className=" animate-spin" />
+              ) : (
+                <label htmlFor="imageUpload">
+                  <input
+                    multiple
+                    id="imageUpload"
+                    // @ts-ignore
+                    onChange={(e) => imageUploader(e.target.files)}
+                    type="file"
+                    accept="image/*"
+                    hidden
+                  />
+
+                  <Paperclip size={16} />
+                </label>
+              )}
             </Button>
           )}
         </div>

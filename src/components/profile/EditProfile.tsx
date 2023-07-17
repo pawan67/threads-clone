@@ -2,7 +2,7 @@ import { useToast } from "@/lib/use-toast";
 import { validateUsername } from "@/lib/username";
 import { FC, useState, useTransition } from "react";
 import { Button } from "../ui/button";
-import { AlertCircle, Pencil } from "lucide-react";
+import { AlertCircle, Loader2, Pencil } from "lucide-react";
 import { Input } from "../ui/input";
 import { Card, CardContent } from "../ui/card";
 import { Label } from "../ui/label";
@@ -53,7 +53,6 @@ const EditProfile: FC<Props> = ({ userData, allUsernames }) => {
   const [open, setOpen] = useState(false);
   const handleUpload = async (e: any) => {
     setLoading(true);
-
     const file = e.target.files[0];
     const imgUrl = await uploadImage(file);
     setImage(imgUrl);
@@ -87,14 +86,18 @@ const EditProfile: FC<Props> = ({ userData, allUsernames }) => {
                           width={80}
                           height={80}
                         />
+                        {loading ? (
+                          <Loader2 className=" animate-spin absolute bottom-0 right-0  rounded-full" />
+                        ) : (
+                          <label htmlFor="profileInput">
+                            <Pencil className=" absolute bottom-0 right-0  rounded-full " />
+                          </label>
+                        )}
 
-                        <label htmlFor="profileInput">
-                          <Pencil className=" absolute bottom-0 right-0  rounded-full " />
-                        </label>
                         <input
                           onChange={handleUpload}
                           type="file"
-                          accept="image/png, image/gif, image/jpeg"
+                          accept="image/*"
                           id="profileInput"
                           name="profileInput"
                           hidden

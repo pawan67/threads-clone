@@ -47,7 +47,7 @@ const Profile: FC<ProfileProps> = ({
   const shareProfile = () => {
     const shareData = {
       title: "Threads",
-      text: `Check out ${user.name}'s profile on Threads`,
+      text: `Check out ${user.name}'s (@${user.username}) on Threads`,
       url: `https://threads-meta.vercel.app/${user.username}`,
     };
     if (navigator.share) navigator.share(shareData);
