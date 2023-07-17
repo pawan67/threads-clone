@@ -152,33 +152,34 @@ const OnboardingProfileUpdate: FC<OnboardingProfileUpdateProps> = ({
               </div>
             </div>
           </form>
+          <Button
+            onClick={() => {
+              startTransition(() => {
+                onboardData(username, name, bio, userData.image, userData.id);
+              });
+              toast({
+                title: "Updated user data",
+              });
+              next();
+            }}
+            variant="secondary"
+            className="w-full mt-6"
+            disabled={
+              name.length === 0 ||
+              name.length > 16 ||
+              username.length === 0 ||
+              username.length > 16 ||
+              bio.length > 100 ||
+              (allUsernames.includes(username) &&
+                username !== userData.username) ||
+              !validateUsername(username) ||
+              filter.isProfane(username)
+            }
+          >
+            Continue
+          </Button>
         </CardContent>
       </Card>
-      <Button
-        onClick={() => {
-          startTransition(() => {
-            onboardData(username, name, bio, userData.image, userData.id);
-          });
-          toast({
-            title: "Updated user data",
-          });
-          next();
-        }}
-        variant="secondary"
-        className="w-full mt-6"
-        disabled={
-          name.length === 0 ||
-          name.length > 16 ||
-          username.length === 0 ||
-          username.length > 16 ||
-          bio.length > 100 ||
-          (allUsernames.includes(username) && username !== userData.username) ||
-          !validateUsername(username) ||
-          filter.isProfane(username)
-        }
-      >
-        Continue
-      </Button>
     </>
   );
 };

@@ -48,7 +48,6 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
         description: "Replied to thread",
       });
       router.push(`/thread/${thread?.id}`);
-      revalidatePath(`/thread/${thread?.id}`);
     }
   }, [isPending]);
 
@@ -68,13 +67,6 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
       };
       const { data } = await axios.post("/api/thread/create", payload);
       return data;
-    },
-    onError: (err) => {
-      return toast({
-        title: "Something went wrong",
-        description: "Thread was not created",
-        variant: "destructive",
-      });
     },
 
     onSuccess: (data) => {
@@ -120,8 +112,8 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
 
   return (
     <div className=" w-full ">
-      <div className=" flex space-x-2   w-full  ">
-        <div className="space-x-2 flex font-light">
+      <div className=" flex space-x-2 mt-2   w-full  ">
+        <div className="space-x-2  flex font-light">
           <div className="flex flex-col items-center justify-start">
             <div className="w-8 h-8 rounded-full bg-neutral-600 overflow-hidden">
               <Image
@@ -135,8 +127,8 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
             <div className="w-0.5 grow mt-2 rounded-full bg-neutral-800" />
           </div>
         </div>
-        <div className="    ">
-          <p className=" font-semibold  ">Me</p>
+        <div className="     ">
+          <p className=" font-semibold  ">me</p>
 
           <div className=" my-1      ">
             <TextareaAutosize
@@ -147,7 +139,7 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
                 setContentJson({ ...contentJson, text: e.target.value });
               }}
               autoFocus
-              className=" my-4 text-lg   w-full resize-none appearance-none overflow-hidden bg-transparent   focus:outline-none"
+              className=" my-4    w-full resize-none appearance-none overflow-hidden bg-transparent   focus:outline-none"
             />
             <div className="   ">
               {contentJson.images.length > 0 && (
@@ -234,7 +226,11 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
               className=" text-blue-400"
               variant="secondary"
             >
-              Submit
+              {repliedClicked ? (
+                <Loader2Icon className=" animate-spin" size={20} />
+              ) : (
+                "Submit"
+              )}
             </Button>
           ) : (
             <Button
