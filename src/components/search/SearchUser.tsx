@@ -1,3 +1,4 @@
+"use client";
 import { Prisma, User } from "@prisma/client";
 import { Button } from "../ui/button";
 import Image from "next/image";
@@ -27,14 +28,16 @@ export function SearchUser({
           height={32}
           width={32}
           className=""
-          alt={user.name + "'s profile image"}
+          alt={user.name}
         />
       </div>
-      <div className="grow flex items-start justify-between pb-4 pr-3 border-b border-neutral-900">
+      <div className="grow flex items-start justify-between pb-4 pr-3 border-b ">
         <div>
           <div className="font-semibold">{user.username}</div>
-          <div className="text-neutral-600 -mt-1 font-medium">{user.name}</div>
-          
+          <div className=" text-muted-foreground -mt-1   font-medium">
+            {user.name}
+          </div>
+
           <div className="mt-2 text-sm">
             {nFormatter(user.followedBy.length, 1)}{" "}
             {user.followedBy.length === 1 ? "follower" : "followers"}

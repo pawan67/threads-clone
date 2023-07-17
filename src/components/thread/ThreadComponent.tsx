@@ -57,7 +57,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
     ? "px-3 pt-4 space-x-2 flex font-light"
     : comment
     ? `space-x-2 flex font-light ${noLink ? "pointer-events-none" : ""}`
-    : `px-3 py-4 space-x-2 flex border-b font-light border-neutral-900 ${
+    : `px-3 py-4 space-x-2 flex border-b font-light  ${
         noLink ? "pointer-events-none" : ""
       }`;
 
@@ -77,7 +77,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
             </Link>
           </div>
           <div
-            className={`w-0.5 grow mt-2 rounded-full bg-neutral-800 relative ${
+            className={`w-0.5 grow mt-2 rounded-full bg-border relative ${
               parent ? "mb-5" : null
             }`}
           >

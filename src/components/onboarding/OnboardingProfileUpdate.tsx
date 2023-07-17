@@ -55,7 +55,7 @@ const OnboardingProfileUpdate: FC<OnboardingProfileUpdateProps> = ({
               <div className=" flex justify-center">
                 <div className=" relative">
                   <Image
-                    className=" rounded-full"
+                    className="aspect-square object-cover rounded-full"
                     alt={userData.name}
                     src={image as string}
                     width={80}

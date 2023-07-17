@@ -11,7 +11,6 @@ import Logo from "../logo/Logo";
 
 interface NavbarProps {
   username?: any;
-  
 }
 
 const Navbar: FC<NavbarProps> = ({ username }) => {
@@ -25,7 +24,7 @@ const Navbar: FC<NavbarProps> = ({ username }) => {
             {navigationUrls.map((navItem, index) => (
               <Link href={navItem.url} key={index}>
                 {navItem.url === pathname ? (
-                  <navItem.icon set="bold" size={25} />
+                  <navItem.icon stroke="bold" set="bold" size={25} />
                 ) : (
                   <navItem.icon primaryColor="gray" size={25} />
                 )}

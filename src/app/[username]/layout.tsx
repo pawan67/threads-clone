@@ -5,13 +5,14 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { Instagram } from "lucide-react";
+import { Instagram, Settings } from "lucide-react";
 import { redirect } from "next/navigation";
 import { FC } from "react";
 import { followUser, unfollowUser } from "@/lib/actions";
 import SorryPageNotFound from "@/components/miscellaneous/SorryPageNotFound";
 import { Metadata } from "next";
 import { metaTagsGenerator } from "@/lib/utils";
+import Link from "next/link";
 
 export async function generateMetadata({
   params: { username },
@@ -81,7 +82,7 @@ const layout: FC<layoutProps> = async ({ params, children }) => {
   return (
     <>
       <div className=" relative  ">
-        <div className=" flex justify-end space-x-3">
+        <div className=" flex justify-end space-x-3 ">
           <div>
             <a
               className={buttonVariants({ size: "icon", variant: "ghost" })}
@@ -90,6 +91,15 @@ const layout: FC<layoutProps> = async ({ params, children }) => {
               <Instagram />
             </a>
           </div>
+          <Link
+            className={buttonVariants({
+              size: "icon",
+              variant: "ghost",
+            })}
+            href="/settings"
+          >
+            <Settings />
+          </Link>
           <SignOut />
         </div>
         <Profile

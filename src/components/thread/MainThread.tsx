@@ -51,10 +51,10 @@ const MainThread: FC<ThreadComponentProps> = ({
 }) => {
   return (
     <>
-      <div className="px-3 py-4 space-y-3 flex flex-col border-b font-light border-neutral-900">
+      <div className="px-3 py-4 space-y-3 flex flex-col border-b font-light ">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-full bg-neutral-600 overflow-hidden">
+            <div className="w-8 h-8 rounded-full  overflow-hidden">
               <Image
                 src={data.author.image}
                 height={32}

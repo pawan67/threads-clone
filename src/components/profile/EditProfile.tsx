@@ -81,7 +81,7 @@ const EditProfile: FC<Props> = ({ userData, allUsernames }) => {
                   <div className=" flex justify-center">
                     <div className=" relative">
                       <Image
-                        className=" rounded-full"
+                        className=" aspect-square object-cover rounded-full"
                         alt={userData.name}
                         src={image as string}
                         width={80}
@@ -210,40 +210,6 @@ const EditProfile: FC<Props> = ({ userData, allUsernames }) => {
               >
                 Update
               </Button>
-
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button className=" w-full mt-3 " variant="destructive">
-                    Delete account
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you absolutely sure?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone. This will permanently delete
-                      your account and remove your data from our servers.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() => {
-                        startTransition(() => {
-                          deleteAccount(userData.id);
-                        });
-                        toast({
-                          title: "Deleted user account",
-                        });
-                      }}
-                    >
-                      Continue
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
             </CardContent>
           </Card>
         </DialogContent>
