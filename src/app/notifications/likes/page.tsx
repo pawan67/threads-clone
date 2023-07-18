@@ -1,11 +1,8 @@
-import Logo from "@/components/logo/Logo";
-import AllNotifications from "@/components/notifications/AllNotifications";
-import Notification from "@/components/notifications/Notification";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { redirect } from "next/navigation";
 import { FC } from "react";
-
+import { redirect } from "next/navigation";
+import Notification from "@/components/notifications/Notification";
 interface pageProps {}
 
 const page: FC<pageProps> = async ({}) => {
@@ -22,6 +19,7 @@ const page: FC<pageProps> = async ({}) => {
   const notifications = await db.notification.findMany({
     where: {
       receiverId: user?.id,
+      type: "LIKE",
     },
     orderBy: {
       createdAt: "desc",
@@ -41,7 +39,7 @@ const page: FC<pageProps> = async ({}) => {
   if (!user) return redirect("/");
 
   return (
-    <div className=" space-y-2  ">
+    <div>
       {notifications.length > 0
         ? notifications.map((notification) => (
           

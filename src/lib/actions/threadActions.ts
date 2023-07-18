@@ -5,6 +5,7 @@ import { db } from "../db";
 export const likeThread = async (
   thread: string,
   userId: string,
+  receiverId: string,
   pathname: string
 ) => {
   await db.likes.create({
@@ -37,12 +38,29 @@ export const likeThread = async (
     },
   });
 
+  await db.notification.create({
+    data: {
+      senderId: userId,
+      threadId: thread,
+      type: "LIKE",
+      receiverId: receiverId,
+    },
+
+    include: {
+      sender: true,
+      receiver: true,
+      thread: true,
+    },
+  });
+
   revalidatePath(pathname);
+  revalidatePath("/notifications");
 };
 
 export const unlikeThread = async (
   thread: string,
   userId: string,
+  receiverId: string,
   pathname: string
 ) => {
   await db.likes.delete({
@@ -54,7 +72,17 @@ export const unlikeThread = async (
     },
   });
 
+  await db.notification.deleteMany({
+    where: {
+      senderId: userId,
+      threadId: thread,
+      type: "LIKE",
+      receiverId: receiverId,
+    },
+  });
+
   revalidatePath(pathname);
+  revalidatePath("/notifications");
 };
 
 export async function deleteThread(id: string, pathname: string) {
@@ -97,5 +125,3 @@ export async function replyToThread(
 
   revalidatePath(path);
 }
-
-

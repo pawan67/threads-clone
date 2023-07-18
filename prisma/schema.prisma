@@ -54,12 +54,15 @@ model User {
   followedBy User[] @relation("UserFollows")
   following  User[] @relation("UserFollows")
 
-  role          Role            @default(USER)
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @default(now()) @updatedAt
-  likes         Likes[]
-  repost        Repost[]
-  Notifications Notifications[]
+  role                  Role           @default(USER)
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @default(now()) @updatedAt
+  likes                 Likes[]
+  repost                Repost[]
+  // Define the relation to sent notifications
+  sentNotifications     Notification[] @relation("SentNotifications")
+  // Define the relation to received notifications
+  receivedNotifications Notification[] @relation("ReceivedNotifications")
 }
 
 model Thread {
@@ -74,7 +77,7 @@ model Thread {
   updatedAt     DateTime        @default(now()) @updatedAt
   likes         Likes[]
   repost        Repost?
-  Notifications Notifications[]
+  Notifications Notification[]
 }
 
 model Likes {
@@ -95,16 +98,26 @@ model Repost {
   reposterId String
 }
 
-model Notifications {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  threadId  String
-  thread    Thread   @relation(fields: [threadId], references: [id])
-  read      Boolean  @default(false)
-  type      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+model Notification {
+  id         String           @id @default(cuid())
+  senderId   String
+  receiverId String
+  sender     User             @relation("SentNotifications", fields: [senderId], references: [id])
+  receiver   User             @relation("ReceivedNotifications", fields: [receiverId], references: [id])
+  read       Boolean          @default(false)
+  type       NotificationType
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @default(now()) @updatedAt
+  userId     String?
+  thread     Thread?          @relation(fields: [threadId], references: [id])
+  threadId   String?
+}
+
+enum NotificationType {
+  LIKE
+  REPOST
+  FOLLOW
+  NEWPOST
 }
 
 enum Role {

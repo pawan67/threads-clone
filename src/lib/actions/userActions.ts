@@ -52,6 +52,19 @@ export const followUser = async (
     },
   });
 
+  await db.notification.create({
+    data: {
+      senderId: followingId,
+      type: "FOLLOW",
+      receiverId: userId,
+    },
+
+    include: {
+      sender: true,
+      receiver: true,
+    },
+  });
+
   revalidatePath(pathname);
 };
 
@@ -93,6 +106,4 @@ export async function deleteAccount(userId: string) {
       userId,
     },
   });
-
-  
 }

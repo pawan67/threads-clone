@@ -57,7 +57,7 @@ const Navbar: FC<NavbarProps> = ({ username }) => {
                 pathname === navItem.url
                   ? "bg-muted  hover:bg-muted"
                   : " hover:bg-muted",
-                "justify-start w-full   break-before-avoid whitespace-nowrap flex-shrink-0 flex items-center px-4  rounded-md  font-medium   transition-all"
+                "justify-start w-full   break-before-avoid whitespace-nowrap flex-shrink-0 flex items-center px-4    font-medium   transition-all"
               )}
             >
               {navItem.url === pathname ? (
@@ -76,7 +76,7 @@ const Navbar: FC<NavbarProps> = ({ username }) => {
                 pathname === `/${username}`
                   ? "bg-muted  hover:bg-muted"
                   : " hover:bg-muted",
-                "justify-start w-full   break-before-avoid whitespace-nowrap flex-shrink-0 flex items-center px-4  rounded-md  font-medium   transition-all"
+                "justify-start w-full   break-before-avoid whitespace-nowrap flex-shrink-0 flex items-center px-4    font-medium   transition-all"
               )}
             >
               {`/${username}` === pathname ? (

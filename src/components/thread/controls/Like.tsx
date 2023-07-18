@@ -4,10 +4,22 @@ import { usePathname } from "next/navigation";
 import { getSession, useSession } from "next-auth/react";
 import { likeThread, unlikeThread } from "@/lib/actions/threadActions";
 import { Heart } from "lucide-react";
+import { Prisma } from "@prisma/client";
 interface LikeProps {
   likes: string[];
   numPosts?: number;
-  thread: string;
+  thread: Prisma.ThreadGetPayload<{
+    include: {
+      author: true;
+      children: {
+        include: {
+          author: true;
+        };
+      };
+      parent: true;
+      likes: true;
+    };
+  }>;
 }
 
 const Like: FC<LikeProps> = ({ likes, numPosts, thread }) => {
@@ -41,9 +53,13 @@ const Like: FC<LikeProps> = ({ likes, numPosts, thread }) => {
 
     if (user) {
       if (!wasLiked) {
-        startTransition(() => likeThread(thread, user.id, pathname));
+        startTransition(() =>
+          likeThread(thread.id, user.id, thread.author.id, pathname)
+        );
       } else {
-        startTransition(() => unlikeThread(thread, user.id, pathname));
+        startTransition(() =>
+          unlikeThread(thread.id, user.id, thread.author.id, pathname)
+        );
       }
     }
   };

@@ -28,7 +28,7 @@ export default function UserActions({
   return (
     <div className="relative h-9">
       <div className="flex items-center absolute top-0 left-0 space-x-3.5 py-2 z-10">
-        <Like likes={likes} thread={data.id} numPosts={numPosts} />
+        <Like likes={likes} thread={data} numPosts={numPosts} />
         <Comment id={data.id} />
         <Repost />
         <Share data={data} />
