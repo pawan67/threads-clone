@@ -14,7 +14,7 @@ import { User } from "next-auth";
 import { usePathname, useRouter } from "next/navigation";
 import { FC, useEffect, useState, useTransition } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { replyToThread } from "@/lib/actions";
+import { createThread, replyToThread } from "@/lib/actions";
 import { Prisma } from "@prisma/client";
 interface CreateProps {
   isReply?: boolean;
@@ -40,6 +40,7 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
     images: [],
   });
   const [repliedClicked, setRepliedClicked] = useState(false);
+  const [createClicked, setCreateClicked] = useState(false);
   const [isPending, startTransition] = useTransition();
   // reply to thread handling
   useEffect(() => {
@@ -48,6 +49,14 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
         description: "Replied to thread",
       });
       router.push(`/thread/${thread?.id}`);
+    }
+  }, [isPending]);
+  useEffect(() => {
+    if (!isPending && createClicked) {
+      toast({
+        description: "Thread was created successfully",
+      });
+      router.push("/");
     }
   }, [isPending]);
 
@@ -59,25 +68,6 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
   const isImagesEmpty = () => contentJson.images.length === 0;
 
   const router = useRouter();
-
-  const { mutate: createThread, isLoading } = useMutation({
-    mutationFn: async () => {
-      const payload: ThreadCreationRequest = {
-        content: contentJson,
-      };
-      const { data } = await axios.post("/api/thread/create", payload);
-      return data;
-    },
-
-    onSuccess: (data) => {
-      router.push(`/`);
-      revalidatePath("/");
-
-      return toast({
-        description: "Thread was created successfully",
-      });
-    },
-  });
 
   const imageUploader = async (pics: File[] | null) => {
     if (!pics) return;
@@ -203,7 +193,7 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
         <div className=" flex justify-between">
           <div
             className={` ${
-              (isLoading || isContentEmpty()) && " text-secondary "
+              (createClicked || isContentEmpty()) && " text-secondary "
             } `}
           >
             {isReply ? "Replying to thread" : "Anyone can reply to this thread"}
@@ -234,14 +224,19 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
             </Button>
           ) : (
             <Button
-              onClick={() => createThread()}
-              disabled={isContentEmpty() || isLoading}
+              onClick={() => {
+                startTransition(() => {
+                  createThread(contentJson, user.id, `/`);
+                });
+                setCreateClicked(true);
+              }}
+              disabled={isContentEmpty() || createClicked}
               type="submit"
               form="thread-post-form"
               className=" text-blue-400"
               variant="secondary"
             >
-              {isLoading ? "Posting..." : "Post"}
+              {createClicked ? "Posting..." : "Post"}
             </Button>
           )}
         </div>

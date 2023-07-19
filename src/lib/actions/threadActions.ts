@@ -1,6 +1,21 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { db } from "../db";
+import { getAuthSession } from "../auth";
+
+export const createThread = async (
+  content: any,
+  authorId: string,
+  pathname: string
+) => {
+  await db.thread.create({
+    data: {
+      content: content,
+      authorId: authorId,
+    },
+  });
+  revalidatePath(pathname);
+};
 
 export const likeThread = async (
   thread: string,
@@ -38,20 +53,22 @@ export const likeThread = async (
     },
   });
 
-  await db.notification.create({
-    data: {
-      senderId: userId,
-      threadId: thread,
-      type: "LIKE",
-      receiverId: receiverId,
-    },
+  if (userId !== receiverId) {
+    await db.notification.create({
+      data: {
+        senderId: userId,
+        threadId: thread,
+        type: "LIKE",
+        receiverId: receiverId,
+      },
 
-    include: {
-      sender: true,
-      receiver: true,
-      thread: true,
-    },
-  });
+      include: {
+        sender: true,
+        receiver: true,
+        thread: true,
+      },
+    });
+  }
 
   revalidatePath(pathname);
   revalidatePath("/notifications");
@@ -107,6 +124,15 @@ export async function replyToThread(
   threadId: string,
   path: string
 ) {
+  const receiver = await db.thread.findUnique({
+    where: {
+      id: threadId,
+    },
+    select: {
+      authorId: true,
+    },
+  });
+
   await db.thread.create({
     data: {
       content: content,
@@ -122,6 +148,23 @@ export async function replyToThread(
       },
     },
   });
+
+  if (authorId === receiver?.authorId) {
+    await db.notification.create({
+      data: {
+        senderId: authorId,
+        threadId: threadId,
+        type: "REPLY",
+        receiverId: receiver?.authorId as string,
+      },
+
+      include: {
+        sender: true,
+        receiver: true,
+        thread: true,
+      },
+    });
+  }
 
   revalidatePath(path);
 }

@@ -118,6 +118,7 @@ enum NotificationType {
   REPOST
   FOLLOW
   NEWPOST
+  REPLY
 }
 
 enum Role {
