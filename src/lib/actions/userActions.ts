@@ -30,14 +30,7 @@ export const followUser = async (
   followingId: string,
   pathname: string
 ) => {
-  console.log(
-    "userId",
-    userId,
-    "followingId",
-    followingId,
-    "pathname",
-    pathname
-  );
+ 
 
   await db.user.update({
     where: {

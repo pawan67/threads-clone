@@ -42,7 +42,7 @@ const page: FC<pageProps> = async ({ params }) => {
   return (
     <>
       <div className="w-full mt-4 flex">
-        <button className="w-full h-10 py-2 font-semibold border-b border-b-white text-center">
+        <button className="w-full h-10 py-2 font-semibold border-b border-b-black dark:border-b-white text-center">
           Threads
         </button>
         <Link

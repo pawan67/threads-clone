@@ -101,8 +101,8 @@ const Notification: FC<NotificationProps> = ({ data, user }) => {
           </div>
           <FollowButton
             name={data.sender.name}
-            id={user.id}
-            followingId={data.senderId}
+            id={data.senderId}
+            followingId={user.id}
             isFollowing={isFollowing}
           />
         </div>

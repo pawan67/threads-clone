@@ -71,7 +71,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
                 src={data.author.image}
                 height={32}
                 width={32}
-                className=""
+                className=" object-cover"
                 alt={data.author.name}
               />
             </Link>
@@ -88,7 +88,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
                   src={loop}
                   width={16}
                   height={32}
-                  className="w-full h-full"
+                  className="w-full object-cover h-full"
                 />
               </div>
             ) : null}
@@ -126,7 +126,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
             </div>
           </Link>
           <div>
-            {data.content?.images.length > 0 && (
+            {data.content?.images.length > 1 ? (
               <div className=" my-2 grid grid-cols-2 gap-3">
                 <AntImage.PreviewGroup>
                   {data.content?.images.map((image: string, index: number) => (
@@ -141,7 +141,20 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
                   ))}
                 </AntImage.PreviewGroup>
               </div>
-            )}
+            ) : data.content?.images.length === 1 ? (
+              <div className=" my-2 grid grid-cols-1 gap-3">
+                {data.content?.images.map((image: string, index: number) => (
+                  <div className="   ">
+                    <AntImage
+                      alt={data.author.name}
+                      key={index}
+                      className=" shadow-xl border aspect-[4/3] object-cover rounded-md"
+                      src={image}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
 
           {comment ? null : (
@@ -150,23 +163,25 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
                 data={data}
                 numPosts={threads ? threads.length : -1}
               />
-              <div className="flex text-neutral-600 items-center space-x-2">
-                {data.children.length > 0 ? (
-                  <div>
-                    {data.children.length}{" "}
-                    {data.children.length === 1 ? "reply" : "replies"}
-                  </div>
-                ) : null}
-                {data.children.length > 0 && data.likes.length > 0 ? (
-                  <div className="w-1 h-1 rounded-full bg-neutral-600" />
-                ) : null}
-                {data.likes.length > 0 ? (
-                  <div>
-                    {data.likes.length}{" "}
-                    {data.likes.length === 1 ? "like" : "likes"}
-                  </div>
-                ) : null}
-              </div>
+              <Link href={`/thread/${data.id}`}>
+                <div className="flex text-neutral-600 items-center space-x-2">
+                  {data.children.length > 0 ? (
+                    <div>
+                      {data.children.length}{" "}
+                      {data.children.length === 1 ? "reply" : "replies"}
+                    </div>
+                  ) : null}
+                  {data.children.length > 0 && data.likes.length > 0 ? (
+                    <div className="w-1 h-1 rounded-full bg-neutral-600" />
+                  ) : null}
+                  {data.likes.length > 0 ? (
+                    <div>
+                      {data.likes.length}{" "}
+                      {data.likes.length === 1 ? "like" : "likes"}
+                    </div>
+                  ) : null}
+                </div>
+              </Link>
             </>
           )}
         </div>

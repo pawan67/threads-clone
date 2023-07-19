@@ -72,7 +72,7 @@ const Profile: FC<ProfileProps> = ({
             </div>
           </div>
           <div className="w-14 h-14 rounded-full overflow-hidden bg-neutral-600">
-            <Image src={user.image} alt={user.name} height={56} width={56} />
+            <Image src={user.image} className=" object-cover" alt={user.name} height={56} width={56} />
           </div>
         </div>
         <div>
