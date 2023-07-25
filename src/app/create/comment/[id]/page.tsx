@@ -1,4 +1,5 @@
 import SorryPageNotFound from "@/components/miscellaneous/SorryPageNotFound";
+import BackButton from "@/components/thread/BackButton";
 import { CreateComment } from "@/components/thread/comment/CreateComponent";
 import { db } from "@/lib/db";
 import { FC } from "react";
@@ -32,6 +33,7 @@ const ThreadComment: FC<pageProps> = async ({ params }) => {
 
   return (
     <div>
+      <BackButton />
       <CreateComment thread={thread} />
     </div>
   );

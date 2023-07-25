@@ -16,6 +16,7 @@ import { FC, useEffect, useState, useTransition } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { createThread, replyToThread } from "@/lib/actions";
 import { Prisma } from "@prisma/client";
+import { uploadImage } from "@/lib/uploadImage";
 interface CreateProps {
   isReply?: boolean;
   user: User;
@@ -81,20 +82,14 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
     setLoading(true);
 
     for (let i = 0; i < pics.length; i++) {
-      const payload = new FormData();
-      payload.append("file", pics[i]);
-      payload.append("upload_preset", "helloworld");
-      payload.append("cloud_name", "dewctbby3");
-
-      const { data } = await axios.post(
-        "https://api.cloudinary.com/v1_1/dewctbby3/image/upload",
-        payload
-      );
-
-      setContentJson((prevState: { text: string; images: string[] }) => ({
-        ...prevState,
-        images: [...prevState.images, data.secure_url],
-      }));
+      const setImages = async () => {
+        const image = await uploadImage(pics[i]);
+        setContentJson((prevState: { text: string; images: string[] }) => ({
+          ...prevState,
+          images: [...prevState.images, image],
+        }));
+      };
+      setImages();
     }
 
     setLoading(false);

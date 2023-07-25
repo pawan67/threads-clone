@@ -88,7 +88,7 @@ const MainThread: FC<ThreadComponentProps> = ({
             </div>
           </Link>
           <div>
-            {data.content?.images.length > 0 && (
+            {data.content?.images.length > 1 ? (
               <div className=" my-2 grid grid-cols-2 gap-3">
                 <AntImage.PreviewGroup>
                   {data.content?.images.map((image: string, index: number) => (
@@ -103,7 +103,20 @@ const MainThread: FC<ThreadComponentProps> = ({
                   ))}
                 </AntImage.PreviewGroup>
               </div>
-            )}
+            ) : data.content?.images.length === 1 ? (
+              <div className=" my-2 grid grid-cols-1 gap-3">
+                {data.content?.images.map((image: string, index: number) => (
+                  <div className="   ">
+                    <AntImage
+                      alt={data.author.name}
+                      key={index}
+                      className=" shadow-xl border aspect-[4/3] object-cover rounded-md"
+                      src={image}
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
 
           <>

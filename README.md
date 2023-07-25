@@ -1,4 +1,4 @@
-# Threads Clone (under development)
+# Threads Clone
 
 ### A fullstack Threads clone built with Next JS 13, Prisma, TypeScript, and Tailwind CSS.
 
@@ -7,12 +7,12 @@
 -   [x] User authentication
 -   [x] Create threads
 -   [x] Onboard new users
--   [ ] display thread details
--   [ ] Displaying threads in feed & optimizations
--   [ ] like, repost, comment, share 
--   [ ] Replying to threads
--   [ ] Search bar
--   [ ] Deployment
+-   [x] display thread details
+-   [x] Displaying threads in feed & optimizations
+-   [x] like, repost, comment, share 
+-   [x] Replying to threads
+-   [x] Search bar
+-   [x] Deployment
 
 ## Installation
 
@@ -52,7 +52,8 @@ Start the server
 
 ## Demo Link 
 
-(Under Development)
+[https://threads-clone.vercel.app/](https://threads-clone.vercel.app/)
+
 
 
 ## Tech Stack
@@ -63,5 +64,13 @@ Start the server
 
 
 ## Screenshots
+
+![App Screenshot](https://i.imgur.com/AqhmIx3.png)
+![App Screenshot](https://i.imgur.com/ovw6Pz0.png)
+![App Screenshot](https://i.imgur.com/yEfINI3.png)
+![App Screenshot](https://i.imgur.com/eywnFJo.png)
+![App Screenshot](https://i.imgur.com/RXAKoJp.png)
+![App Screenshot](https://i.imgur.com/PwMO3Ex.png)
+
 
 

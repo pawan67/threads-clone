@@ -51,14 +51,10 @@ export function CreateComment({
 
   if (!user) return null;
 
-  
-
   return (
-    <div>
+    <div className=" mt-5">
       <ThreadComponent data={thread} noLink comment />
       <Create thread={thread} user={user} isReply />
-
-      
     </div>
   );
 }
