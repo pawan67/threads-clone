@@ -5,6 +5,7 @@ import { Image as AntImage } from "antd";
 import Link from "next/link";
 import { FC } from "react";
 import loop from "@/assets/loop.svg";
+import lightLoop from "@/assets/loop-light.svg";
 import AuthorNameLink from "./AuthorNameLink";
 import UserActions from "./controls";
 import MoreMenu from "./MoreMenu";
@@ -88,7 +89,14 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
                   src={loop}
                   width={16}
                   height={32}
-                  className="w-full object-cover h-full"
+                  className="w-full hidden dark:block object-cover h-full"
+                />
+                <Image
+                  alt=""
+                  src={lightLoop}
+                  width={16}
+                  height={32}
+                  className="w-full dark:hidden  object-cover h-full"
                 />
               </div>
             ) : null}

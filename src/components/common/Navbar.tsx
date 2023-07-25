@@ -11,9 +11,10 @@ import Logo from "../logo/Logo";
 
 interface NavbarProps {
   username?: any;
+  unReadNotificationCount?: number;
 }
 
-const Navbar: FC<NavbarProps> = ({ username }) => {
+const Navbar: FC<NavbarProps> = ({ username, unReadNotificationCount }) => {
   const pathname = usePathname();
   return (
     <>
@@ -22,12 +23,18 @@ const Navbar: FC<NavbarProps> = ({ username }) => {
         <div className=" z-[1000] md:hidden bg-background fixed bottom-0 inset-x-0 px-7 py-4   ">
           <div className=" flex space-x-3 justify-between">
             {navigationUrls.map((navItem, index) => (
-              <Link href={navItem.url} key={index}>
+              <Link href={navItem.url} className=" relative" key={index}>
                 {navItem.url === pathname ? (
                   <navItem.icon stroke="bold" set="bold" size={25} />
                 ) : (
                   <navItem.icon primaryColor="gray" size={25} />
                 )}
+                {navItem.url === "/notifications" &&
+                  unReadNotificationCount !== 0 && (
+                    <span className=" text-[10px] bottom-0 aspect-square w-4 h-4 flex text-white justify-center items-center  -right-1 bg-red-500 rounded-full p-1 absolute">
+                      <p>{unReadNotificationCount}</p>
+                    </span>
+                  )}
               </Link>
             ))}
             {username && (
@@ -57,7 +64,7 @@ const Navbar: FC<NavbarProps> = ({ username }) => {
                 pathname === navItem.url
                   ? "bg-muted  hover:bg-muted"
                   : " hover:bg-muted",
-                "justify-start w-full drop-shadow-md    break-before-avoid whitespace-nowrap flex-shrink-0 flex items-center px-4    font-medium   transition-all"
+                "justify-start relative w-full drop-shadow-md    break-before-avoid whitespace-nowrap flex-shrink-0 flex items-center px-4    font-medium   transition-all"
               )}
             >
               {navItem.url === pathname ? (
@@ -65,6 +72,12 @@ const Navbar: FC<NavbarProps> = ({ username }) => {
               ) : (
                 <navItem.icon primaryColor="gray" size={20} />
               )}
+              {navItem.url === "/notifications" &&
+                unReadNotificationCount !== 0 && (
+                  <span className=" text-[10px] bottom-0 aspect-square w-5 h-5 flex text-white justify-center items-center  -right-1 bg-red-500 rounded-full p-1 absolute">
+                    <p>{unReadNotificationCount}</p>
+                  </span>
+                )}
               <span className="ml-2">{navItem.name}</span>
             </Link>
           ))}

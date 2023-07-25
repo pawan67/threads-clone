@@ -133,7 +133,7 @@ export async function replyToThread(
     },
   });
 
-  await db.thread.create({
+  const thread = await db.thread.create({
     data: {
       content: content,
       author: {
@@ -149,11 +149,11 @@ export async function replyToThread(
     },
   });
 
-  if (authorId === receiver?.authorId) {
+  if (authorId !== receiver?.authorId) {
     await db.notification.create({
       data: {
         senderId: authorId,
-        threadId: threadId,
+        threadId: thread.id,
         type: "REPLY",
         receiverId: receiver?.authorId as string,
       },
@@ -167,4 +167,17 @@ export async function replyToThread(
   }
 
   revalidatePath(path);
+}
+
+export async function readNotification(id: string) {
+  await db.notification.update({
+    where: {
+      id: id,
+    },
+    data: {
+      read: true,
+    },
+  });
+
+  revalidatePath("/");
 }

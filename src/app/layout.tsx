@@ -9,6 +9,7 @@ import { getAuthSession } from "@/lib/auth";
 import Providers from "@/components/common/Providers";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { db } from "@/lib/db";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = metaTagsGenerator({});
@@ -23,6 +24,15 @@ export default async function RootLayout({
 
   const isUser = !!session?.user;
 
+  const notifcations = await db.notification.findMany({
+    where: {
+      receiverId: session?.user?.id,
+      read: false,
+    },
+  });
+
+
+
   return (
     <html lang="en">
       <head>
@@ -34,7 +44,7 @@ export default async function RootLayout({
         <Providers>
           <div className=" mx-auto max-w-3xl ">
             <div className=" flex max-w-3xl justify-center ">
-              {isUser && <Navbar username={username} />}
+              {isUser && <Navbar unReadNotificationCount={notifcations.length} username={username} />}
 
               <main className=" pt-5 pb-10 container  relative  antialiased">
                 {children}

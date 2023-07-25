@@ -1,6 +1,6 @@
 "use client";
 import { Prisma, User } from "@prisma/client";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import Image from "next/image";
 import AuthorNameLink from "../thread/AuthorNameLink";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import { Heart } from "react-iconly";
 import { formatTimeToNow } from "@/lib/utils";
 import FollowButton from "../search/FollowButton";
 import { StarIcon, User2Icon, UserIcon } from "lucide-react";
+import { readNotification } from "@/lib/actions";
 interface NotificationProps {
   data: Prisma.NotificationGetPayload<{
     include: {
@@ -23,6 +24,10 @@ interface NotificationProps {
 }
 
 const Notification: FC<NotificationProps> = ({ data, user }) => {
+  useEffect(() => {
+    if (!data.read) readNotification(data.id);
+  }, []);
+
   if (data.thread && data.type === "LIKE") {
     return (
       <Link href={`/thread/${data.thread.id}`}>
@@ -68,8 +73,8 @@ const Notification: FC<NotificationProps> = ({ data, user }) => {
 
     return (
       <Link href={`/${data.sender.username}`}>
-        <div className=" flex justify-between items-center ">
-          <div className=" py-4 border-b items-center flex space-x-3">
+        <div className=" flex justify-between border-b w-full items-center ">
+          <div className=" py-4  items-center flex space-x-3">
             <div className=" relative">
               <Image
                 className=" aspect-square object-cover rounded-full"
