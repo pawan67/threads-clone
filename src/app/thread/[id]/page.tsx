@@ -122,7 +122,7 @@ export default async function ThreadDetailedPage({
           data={thread.parent}
         />
       ) : null}
-      <MainThread key={thread.id} data={thread} />
+      <MainThread role={user?.role} key={thread.id} data={thread} />
       {thread.children.map((child) => (
         <ThreadComponent role={user?.role} key={child.id} data={child} />
       ))}

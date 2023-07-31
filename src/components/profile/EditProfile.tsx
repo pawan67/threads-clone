@@ -127,11 +127,12 @@ const EditProfile: FC<Props> = ({ userData, allUsernames }) => {
                         appropriate username.
                       </div>
                     ) : null}
+
                     {!validateUsername(username) ? (
                       <div className="text-red-500 text-sm flex items-center leading-snug">
                         <AlertCircle className="min-w-[16px] min-h-[16px] mr-1" />{" "}
                         Only use lowercase letters, numbers, underscores, & dots
-                        (cannot start/end with last 2).
+                        (cannot start/end with last 2). and 404 is reserved.
                       </div>
                     ) : null}
                     {username.length === 0 ? (

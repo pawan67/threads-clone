@@ -59,7 +59,7 @@ const MainThread: FC<ThreadComponentProps> = ({
                 src={data.author.image}
                 height={32}
                 width={32}
-                className=""
+                className="object-cover  aspect-square "
                 alt={data.author.name + "'s profile image"}
               />
             </div>
@@ -77,7 +77,7 @@ const MainThread: FC<ThreadComponentProps> = ({
               name={data.author.name}
               id={data.id}
               author={data.author.id}
-              role={data.author.role}
+              role={role}
             />
           </div>
         </div>

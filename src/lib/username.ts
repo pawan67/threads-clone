@@ -5,6 +5,6 @@ export const usernameGenerator = (email: string) => {
 };
 
 export const validateUsername = (text: string) => {
-  const pattern = /^[a-zA-Z0-9][a-zA-Z0-9._]*[a-zA-Z0-9]$/;
+  const pattern = /^(?!.*404)[a-zA-Z0-9][a-zA-Z0-9._]*[a-zA-Z0-9]$/;
   return pattern.test(text);
 };

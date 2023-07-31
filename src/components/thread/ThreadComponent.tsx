@@ -72,7 +72,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
                 src={data.author.image}
                 height={32}
                 width={32}
-                className=" object-cover"
+                className=" aspect-square  object-cover"
                 alt={data.author.name}
               />
             </Link>

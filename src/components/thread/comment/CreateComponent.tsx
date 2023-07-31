@@ -53,7 +53,7 @@ export function CreateComment({
 
   return (
     <div className=" mt-5">
-      <ThreadComponent data={thread} noLink comment />
+      <ThreadComponent  data={thread} noLink comment />
       <Create thread={thread} user={user} isReply />
     </div>
   );
