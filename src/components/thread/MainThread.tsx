@@ -71,7 +71,7 @@ const MainThread: FC<ThreadComponentProps> = ({
           </div>
           <div className="flex items-center space-x-3 ">
             <span className="text-sm text-muted-foreground">
-              {formatTimeToNow(data.createdAt)}
+              {formatTimeToNow(data.createdAt) || "now"}
             </span>
             <MoreMenu
               name={data.author.name}

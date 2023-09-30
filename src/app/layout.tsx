@@ -31,8 +31,6 @@ export default async function RootLayout({
     },
   });
 
-
-
   return (
     <html lang="en">
       <head>
@@ -42,9 +40,14 @@ export default async function RootLayout({
       </head>
       <body className={cn(inter.className)}>
         <Providers>
-          <div className=" mx-auto max-w-3xl ">
-            <div className=" flex max-w-3xl justify-center ">
-              {isUser && <Navbar unReadNotificationCount={notifcations.length} username={username} />}
+          <div className=" mx-auto max-w-4xl ">
+            <div className=" flex max-w-4xl justify-center ">
+              {isUser && (
+                <Navbar
+                  unReadNotificationCount={notifcations.length}
+                  username={username}
+                />
+              )}
 
               <main className=" pt-5 pb-10 container  relative  antialiased">
                 {children}

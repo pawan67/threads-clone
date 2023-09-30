@@ -35,7 +35,7 @@ const Thread: FC<ThreadProps> = ({ thread, user }) => {
 
         <div>
           <span className=" text-sm text-muted-foreground">
-            {formatTimeToNow(new Date(thread.createdAt))}
+            {formatTimeToNow(thread.createdAt)}
           </span>
         </div>
       </div>

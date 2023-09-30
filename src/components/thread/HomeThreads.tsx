@@ -27,13 +27,14 @@ const HomeThreads: FC<HomeThreadsProps> = ({ user, threads }) => {
   const [noMore, setNoMore] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  console.log("items", items);
+
   const { ref, inView } = useInView();
 
   useEffect(() => {
     if (inView && !noMore) {
       setLoading(true);
       loadMore();
-      console.log("LOADING MORE");
     }
   }, [inView, noMore]);
 
@@ -53,6 +54,8 @@ const HomeThreads: FC<HomeThreadsProps> = ({ user, threads }) => {
       setNoMore(true);
     }
 
+    console.log("morePosts", morePosts);
+
     setItems([...items, ...morePosts.data]);
     setLoading(false);
   };
@@ -66,7 +69,14 @@ const HomeThreads: FC<HomeThreadsProps> = ({ user, threads }) => {
               <ThreadComponent role={user?.role} threads={items} data={item} />
             </div>
           );
-        return <ThreadComponent role={user?.role} key={item.id} threads={items} data={item} />;
+        return (
+          <ThreadComponent
+            role={user?.role}
+            key={item.id}
+            threads={items}
+            data={item}
+          />
+        );
       })}
       <div className="w-full py-4 flex justify-center">
         {items.length === 0 ? (
