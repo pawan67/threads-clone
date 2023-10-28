@@ -56,7 +56,7 @@ const Notification: FC<NotificationProps> = ({ data, user }) => {
               </span>
             </div>
 
-            <span className="text-muted-foreground -mt-1 text-sm line-clamp-1 ">
+            <span className="text-muted-foreground -mt-1 break-all w-[200px] text-sm line-clamp-1 ">
               {/* @ts-ignore */}
               {data.thread?.content.text || "liked your post"}
             </span>
@@ -145,7 +145,7 @@ const Notification: FC<NotificationProps> = ({ data, user }) => {
             <span className="text-muted-foreground -mt-1 text-sm line-clamp-1 ">
               Replied to your post
             </span>
-            <span className="  text-sm line-clamp-1 ">
+            <span className="  text-sm line-clamp-1 w-[200px] ">
               {/* @ts-ignore */}
               {data.thread?.content.text}
             </span>

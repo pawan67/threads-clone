@@ -112,7 +112,7 @@ const Create: FC<CreateProps> = ({ isReply = false, user, thread }) => {
             <div className="w-0.5 grow mt-2 rounded-full bg-neutral-800" />
           </div>
         </div>
-        <div className="     ">
+        <div className=" w-full     ">
           <p className=" font-semibold  ">me</p>
 
           <div className=" my-1      ">

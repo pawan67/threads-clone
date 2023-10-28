@@ -53,6 +53,12 @@ const Profile: FC<ProfileProps> = ({
     if (navigator.share) navigator.share(shareData);
   };
 
+  const bioWithLinks = user.bio.replace(
+    /https?:\/\/\S+/g,
+    (match) =>
+      `<a class="text-blue-500 underline" href="${match}" target="_blank">${match}</a>`
+  );
+
   return (
     <div>
       <div className=" flex flex-col   space-y-3">
@@ -74,7 +80,7 @@ const Profile: FC<ProfileProps> = ({
           <div className="w-14 h-14 rounded-full overflow-hidden bg-neutral-600">
             <Image
               src={user.image}
-              className="object-cover object-cover"
+              className="object-cover "
               alt={user.name}
               height={56}
               width={56}
@@ -82,7 +88,11 @@ const Profile: FC<ProfileProps> = ({
           </div>
         </div>
         <div>
-          <p className=" whitespace-pre">{user.bio}</p>
+          {/* <p className=" whitespace-pre">{user.bio}</p> */}
+          <p
+            className="whitespace-pre"
+            dangerouslySetInnerHTML={{ __html: bioWithLinks }}
+          />
         </div>
         <div className=" text-muted-foreground">
           {user.followedBy.length} followers

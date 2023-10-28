@@ -79,7 +79,8 @@ export default async function SearchPage({
     <div className=" pb-10">
       <div className="px-3 mb-3">
         <div className="text-2xl font-semibold pt-8 pb-5">Search</div>
-        <Bar />
+        <Bar usersCount={users.length} />
+
       </div>
       {users.length === 0 ? (
         <div className="text-neutral-600 mt-4 text-center leading-loose">

@@ -34,7 +34,7 @@ export function SearchUser({
       <div className="grow flex items-start justify-between pb-4 pr-3 border-b ">
         <div>
           <div className="font-semibold">{user.username}</div>
-          <div className=" text-muted-foreground -mt-1   font-medium">
+          <div className=" text-muted-foreground -mt-1 break-all  font-medium">
             {user.name}
           </div>
 

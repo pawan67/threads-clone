@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 
-export function Bar() {
+export function Bar({ usersCount }: { usersCount: number }) {
   const router = useRouter();
 
   const [search, setSearch] = useState("");
@@ -28,15 +28,22 @@ export function Bar() {
   }, [search]);
 
   return (
-    <div className="relative">
-      <Search className="w-4 h-4 text-neutral-600 absolute top-3 left-2.5 z-10" />
+    <>
+      <div className="relative">
+        <Search className="w-4 h-4 text-neutral-600 absolute top-3 left-2.5 z-10" />
 
-      <Input
-        placeholder="Search"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="pl-8"
-      />
-    </div>
+        <Input
+          placeholder="Search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="pl-8"
+        />
+      </div>
+      <div>
+        <div className=" text-muted-foreground mt-4  leading-loose">
+          {usersCount} users
+        </div>
+      </div>
+    </>
   );
 }
