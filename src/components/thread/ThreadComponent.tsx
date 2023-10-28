@@ -62,6 +62,12 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
         noLink ? "pointer-events-none" : ""
       }`;
 
+  const contentWithLinks = data.content?.text.replace(
+    /https?:\/\/\S+/g,
+    (match: string) =>
+      `<a class="text-blue-500 underline" href="${match}" target="_blank">${match}</a>`
+  );
+
   return (
     <>
       <div className={mainClass}>
@@ -129,9 +135,14 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
           </div>
 
           <Link href={`/thread/${data.id}`}>
-            <div className="text-base/relaxed  text-left whitespace-pre-line">
+            {/* <div className="text-base/relaxed  text-left whitespace-pre-line">
               {data.content?.text}
-            </div>
+            </div> */}
+
+            <div
+              className="text-base/relaxed  text-left whitespace-pre-line"
+              dangerouslySetInnerHTML={{ __html: contentWithLinks }}
+            />
           </Link>
           <div>
             {data.content?.images.length > 1 ? (
