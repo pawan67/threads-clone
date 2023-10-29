@@ -154,20 +154,20 @@ export function createLinks(text: string) {
   );
 }
 
-async function validateIfTagged(text: string) {
-  const regex = /@(\w+)/g;
-  const found = text.match(regex);
+// async function validateIfTagged(text: string) {
+//   const regex = /@(\w+)/g;
+//   const found = text.match(regex);
 
-  const users = found?.map((user) => user.slice(1));
-  const allUsersFromDb = await db.user.findMany({
-    where: {
-      username: {
-        in: users,
-      },
-    },
-  });
+//   const users = found?.map((user) => user.slice(1));
+//   const allUsersFromDb = await db.user.findMany({
+//     where: {
+//       username: {
+//         in: users,
+//       },
+//     },
+//   });
 
-  console.log(users);
+//   console.log(users);
 
-  return found;
-}
+//   return found;
+// }
