@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import EditProfile from "./EditProfile";
+import { createLinks } from "@/lib/utils";
 
 interface ProfileProps {
   user: User & {
@@ -91,7 +92,7 @@ const Profile: FC<ProfileProps> = ({
           {/* <p className=" whitespace-pre">{user.bio}</p> */}
           <p
             className="whitespace-pre"
-            dangerouslySetInnerHTML={{ __html: bioWithLinks }}
+            dangerouslySetInnerHTML={{ __html: createLinks(user.bio) }}
           />
         </div>
         <div className=" text-muted-foreground">

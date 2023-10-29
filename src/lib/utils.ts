@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import { formatDistanceToNowStrict } from "date-fns";
 import locale from "date-fns/locale/en-US";
 import Filter from "bad-words";
+import { db } from "./db";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -45,7 +46,7 @@ function formatDistance(token: string, count: number, options?: any): string {
   return result;
 }
 
-export function formatTimeToNow(date= new Date): string {
+export function formatTimeToNow(date = new Date()): string {
   return formatDistanceToNowStrict(date, {
     addSuffix: true,
     locale: {
@@ -139,3 +140,34 @@ export const metaTagsGenerator = ({
 
   return metaObject;
 };
+
+export function createLinks(text: string) {
+  const contentWithUserLinks = text.replace(
+    /@(\w+)/g,
+    (match: string, username: string) =>
+      `<a href="/${username}" class="text-blue-500  font-semibold">${match}</a>`
+  );
+  return contentWithUserLinks.replace(
+    /https?:\/\/\S+/g,
+    (match: string) =>
+      `<a href="${match}" class="text-blue-500 " target="_blank">${match}</a>`
+  );
+}
+
+async function validateIfTagged(text: string) {
+  const regex = /@(\w+)/g;
+  const found = text.match(regex);
+
+  const users = found?.map((user) => user.slice(1));
+  const allUsersFromDb = await db.user.findMany({
+    where: {
+      username: {
+        in: users,
+      },
+    },
+  });
+
+  console.log(users);
+
+  return found;
+}

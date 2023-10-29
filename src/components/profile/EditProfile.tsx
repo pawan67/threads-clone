@@ -31,6 +31,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { signOut } from "next-auth/react";
+import { Textarea } from "../ui/textarea";
 
 interface Props {
   userData: {
@@ -132,7 +133,8 @@ const EditProfile: FC<Props> = ({ userData, allUsernames }) => {
                       <div className="text-red-500 text-sm flex items-center leading-snug">
                         <AlertCircle className="min-w-[16px] min-h-[16px] mr-1" />{" "}
                         Only use lowercase letters, numbers, underscores, & dots
-                        (cannot start/end with last 2). and 404 is reserved.
+                        (cannot start/end with last 2). and 404, 500 is
+                        reserved.
                       </div>
                     ) : null}
                     {username.length === 0 ? (
@@ -169,7 +171,7 @@ const EditProfile: FC<Props> = ({ userData, allUsernames }) => {
                   </div>
                   <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="bio">Bio</Label>
-                    <Input
+                    <Textarea
                       value={bio}
                       onChange={(e) => setBio(e.target.value)}
                       id="bio"

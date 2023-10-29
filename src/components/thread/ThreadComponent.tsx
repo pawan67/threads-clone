@@ -9,7 +9,7 @@ import lightLoop from "@/assets/loop-light.svg";
 import AuthorNameLink from "./AuthorNameLink";
 import UserActions from "./controls";
 import MoreMenu from "./MoreMenu";
-import { formatTimeToNow } from "@/lib/utils";
+import { createLinks, formatTimeToNow } from "@/lib/utils";
 import Others from "./Others";
 interface ThreadComponentProps {
   data: Prisma.ThreadGetPayload<{
@@ -67,6 +67,7 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
     (match: string) =>
       `<a class="text-blue-500 underline" href="${match}" target="_blank">${match}</a>`
   );
+ 
 
   return (
     <>
@@ -141,7 +142,9 @@ const ThreadComponent: FC<ThreadComponentProps> = ({
 
             <div
               className="text-base/relaxed  text-left whitespace-pre-line"
-              dangerouslySetInnerHTML={{ __html: contentWithLinks }}
+              dangerouslySetInnerHTML={{
+                __html: createLinks(data.content?.text),
+              }}
             />
           </Link>
           <div>

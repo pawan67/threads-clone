@@ -8,7 +8,7 @@ import loop from "@/assets/loop.svg";
 import AuthorNameLink from "./AuthorNameLink";
 import UserActions from "./controls";
 import MoreMenu from "./MoreMenu";
-import { formatTimeToNow } from "@/lib/utils";
+import { createLinks, formatTimeToNow } from "@/lib/utils";
 interface ThreadComponentProps {
   data: Prisma.ThreadGetPayload<{
     include: {
@@ -49,6 +49,12 @@ const MainThread: FC<ThreadComponentProps> = ({
   threads,
   role,
 }) => {
+  const contentWithLinks = data.content?.text.replace(
+    /https?:\/\/\S+/g,
+    (match: string) =>
+      `<a class="text-blue-500 underline" href="${match}" target="_blank">${match}</a>`
+  );
+
   return (
     <>
       <div className="px-3 py-4 space-y-3 flex flex-col border-b font-light ">
@@ -82,11 +88,12 @@ const MainThread: FC<ThreadComponentProps> = ({
           </div>
         </div>
         <div className="w-full space-y-1">
-          <Link href={`/thread/${data.id}`}>
-            <div className="text-base/relaxed  text-left whitespace-pre-line">
-              {data.content?.text}
-            </div>
-          </Link>
+          <div
+            className="text-base/relaxed  text-left whitespace-pre-line"
+            dangerouslySetInnerHTML={{
+              __html: createLinks(data.content?.text),
+            }}
+          />
           <div>
             {data.content?.images.length > 1 ? (
               <div className=" my-2 grid grid-cols-2 gap-3">
